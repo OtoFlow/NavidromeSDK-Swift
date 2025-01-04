@@ -172,7 +172,7 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/Album/genre`.
             public var genre: Swift.String
             /// - Remark: Generated from `#/components/schemas/Album/genres`.
-            public var genres: [Components.Schemas.Genre]
+            public var genres: [Components.Schemas.Genre]?
             /// - Remark: Generated from `#/components/schemas/Album/sortAlbumName`.
             public var sortAlbumName: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/sortAlbumArtistName`.
@@ -196,11 +196,9 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/Album/externalUrl`.
             public var externalUrl: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/externalInfoUpdatedAt`.
-            public var externalInfoUpdatedAt: Foundation.Date
+            public var externalInfoUpdatedAt: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/Album/createdAt`.
             public var createdAt: Foundation.Date
-            /// - Remark: Generated from `#/components/schemas/Album/updatedAt`.
-            public var updatedAt: Foundation.Date
             /// Creates a new `Album`.
             ///
             /// - Parameters:
@@ -245,7 +243,6 @@ public enum Components {
             ///   - externalUrl:
             ///   - externalInfoUpdatedAt:
             ///   - createdAt:
-            ///   - updatedAt:
             public init(
                 playCount: Swift.Int? = nil,
                 playDate: Foundation.Date? = nil,
@@ -274,7 +271,7 @@ public enum Components {
                 duration: Swift.Double,
                 size: Swift.Int,
                 genre: Swift.String,
-                genres: [Components.Schemas.Genre],
+                genres: [Components.Schemas.Genre]? = nil,
                 sortAlbumName: Swift.String? = nil,
                 sortAlbumArtistName: Swift.String? = nil,
                 orderAlbumName: Swift.String,
@@ -286,9 +283,8 @@ public enum Components {
                 mediumImageUrl: Swift.String? = nil,
                 largeImageUrl: Swift.String? = nil,
                 externalUrl: Swift.String? = nil,
-                externalInfoUpdatedAt: Foundation.Date,
-                createdAt: Foundation.Date,
-                updatedAt: Foundation.Date
+                externalInfoUpdatedAt: Foundation.Date? = nil,
+                createdAt: Foundation.Date
             ) {
                 self.playCount = playCount
                 self.playDate = playDate
@@ -331,7 +327,6 @@ public enum Components {
                 self.externalUrl = externalUrl
                 self.externalInfoUpdatedAt = externalInfoUpdatedAt
                 self.createdAt = createdAt
-                self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
                 case playCount
@@ -375,7 +370,6 @@ public enum Components {
                 case externalUrl
                 case externalInfoUpdatedAt
                 case createdAt
-                case updatedAt
             }
         }
         /// - Remark: Generated from `#/components/schemas/Genre`.

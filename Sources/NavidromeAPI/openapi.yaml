@@ -145,12 +145,10 @@ components:
         - duration
         - size
         - genre
-        - genres
         - orderAlbumName
         - orderAlbumArtistName
-        - externalInfoUpdatedAt
         - createdAt
-        - updatedAt
+        # - updatedAt
       properties:
         playCount:
           type: integer
@@ -241,9 +239,9 @@ components:
         createdAt:
           type: string
           format: date-time
-        updatedAt:
-          type: string
-          format: date-time
+        # updatedAt:
+        #   type: string
+        #   format: date-time
     Genre:
       type: object
       required:
