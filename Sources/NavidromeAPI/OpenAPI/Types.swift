@@ -117,6 +117,16 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/Album`.
         public struct Album: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Album/playCount`.
+            public var playCount: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/playDate`.
+            public var playDate: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/Album/rating`.
+            public var rating: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/starred`.
+            public var starred: Swift.Bool?
+            /// - Remark: Generated from `#/components/schemas/Album/starredAt`.
+            public var starredAt: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/Album/id`.
             public var id: Swift.String
             /// - Remark: Generated from `#/components/schemas/Album/libraryId`.
@@ -133,18 +143,46 @@ public enum Components {
             public var albumArtist: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/allArtistIds`.
             public var allArtistIds: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/maxYear`.
+            public var maxYear: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/minYear`.
+            public var minYear: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/date`.
+            public var date: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/maxOriginalYear`.
+            public var maxOriginalYear: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/minOriginalYear`.
+            public var minOriginalYear: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/releases`.
+            public var releases: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/compilation`.
+            public var compilation: Swift.Bool?
+            /// - Remark: Generated from `#/components/schemas/Album/songCount`.
+            public var songCount: Swift.Int?
             /// - Remark: Generated from `#/components/schemas/Album/duration`.
             public var duration: Swift.Double?
+            /// - Remark: Generated from `#/components/schemas/Album/size`.
+            public var size: Swift.Int?
             /// - Remark: Generated from `#/components/schemas/Album/genre`.
             public var genre: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/orderAlbumName`.
+            public var orderAlbumName: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/orderAlbumArtistName`.
+            public var orderAlbumArtistName: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/imageFiles`.
+            public var imageFiles: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/smallImageUrl`.
             public var smallImageUrl: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/mediumImageUrl`.
             public var mediumImageUrl: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/largeImageUrl`.
             public var largeImageUrl: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/paths`.
+            public var paths: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/externalUrl`.
             public var externalUrl: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/externalInfoUpdatedAt`.
+            public var externalInfoUpdatedAt: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/Album/createdAt`.
             public var createdAt: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/Album/updatedAt`.
@@ -152,6 +190,11 @@ public enum Components {
             /// Creates a new `Album`.
             ///
             /// - Parameters:
+            ///   - playCount:
+            ///   - playDate:
+            ///   - rating:
+            ///   - starred:
+            ///   - starredAt:
             ///   - id:
             ///   - libraryId:
             ///   - name:
@@ -160,15 +203,34 @@ public enum Components {
             ///   - albumArtistId:
             ///   - albumArtist:
             ///   - allArtistIds:
+            ///   - maxYear:
+            ///   - minYear:
+            ///   - date:
+            ///   - maxOriginalYear:
+            ///   - minOriginalYear:
+            ///   - releases:
+            ///   - compilation:
+            ///   - songCount:
             ///   - duration:
+            ///   - size:
             ///   - genre:
+            ///   - orderAlbumName:
+            ///   - orderAlbumArtistName:
+            ///   - imageFiles:
             ///   - smallImageUrl:
             ///   - mediumImageUrl:
             ///   - largeImageUrl:
+            ///   - paths:
             ///   - externalUrl:
+            ///   - externalInfoUpdatedAt:
             ///   - createdAt:
             ///   - updatedAt:
             public init(
+                playCount: Swift.Int? = nil,
+                playDate: Foundation.Date? = nil,
+                rating: Swift.Int? = nil,
+                starred: Swift.Bool? = nil,
+                starredAt: Foundation.Date? = nil,
                 id: Swift.String,
                 libraryId: Swift.Int? = nil,
                 name: Swift.String,
@@ -177,15 +239,34 @@ public enum Components {
                 albumArtistId: Swift.String? = nil,
                 albumArtist: Swift.String? = nil,
                 allArtistIds: Swift.String? = nil,
+                maxYear: Swift.Int? = nil,
+                minYear: Swift.Int? = nil,
+                date: Swift.String? = nil,
+                maxOriginalYear: Swift.Int? = nil,
+                minOriginalYear: Swift.Int? = nil,
+                releases: Swift.Int? = nil,
+                compilation: Swift.Bool? = nil,
+                songCount: Swift.Int? = nil,
                 duration: Swift.Double? = nil,
+                size: Swift.Int? = nil,
                 genre: Swift.String? = nil,
+                orderAlbumName: Swift.String? = nil,
+                orderAlbumArtistName: Swift.String? = nil,
+                imageFiles: Swift.String? = nil,
                 smallImageUrl: Swift.String? = nil,
                 mediumImageUrl: Swift.String? = nil,
                 largeImageUrl: Swift.String? = nil,
+                paths: Swift.String? = nil,
                 externalUrl: Swift.String? = nil,
+                externalInfoUpdatedAt: Foundation.Date? = nil,
                 createdAt: Foundation.Date? = nil,
                 updatedAt: Foundation.Date? = nil
             ) {
+                self.playCount = playCount
+                self.playDate = playDate
+                self.rating = rating
+                self.starred = starred
+                self.starredAt = starredAt
                 self.id = id
                 self.libraryId = libraryId
                 self.name = name
@@ -194,16 +275,35 @@ public enum Components {
                 self.albumArtistId = albumArtistId
                 self.albumArtist = albumArtist
                 self.allArtistIds = allArtistIds
+                self.maxYear = maxYear
+                self.minYear = minYear
+                self.date = date
+                self.maxOriginalYear = maxOriginalYear
+                self.minOriginalYear = minOriginalYear
+                self.releases = releases
+                self.compilation = compilation
+                self.songCount = songCount
                 self.duration = duration
+                self.size = size
                 self.genre = genre
+                self.orderAlbumName = orderAlbumName
+                self.orderAlbumArtistName = orderAlbumArtistName
+                self.imageFiles = imageFiles
                 self.smallImageUrl = smallImageUrl
                 self.mediumImageUrl = mediumImageUrl
                 self.largeImageUrl = largeImageUrl
+                self.paths = paths
                 self.externalUrl = externalUrl
+                self.externalInfoUpdatedAt = externalInfoUpdatedAt
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
+                case playCount
+                case playDate
+                case rating
+                case starred
+                case starredAt
                 case id
                 case libraryId
                 case name
@@ -212,12 +312,26 @@ public enum Components {
                 case albumArtistId
                 case albumArtist
                 case allArtistIds
+                case maxYear
+                case minYear
+                case date
+                case maxOriginalYear
+                case minOriginalYear
+                case releases
+                case compilation
+                case songCount
                 case duration
+                case size
                 case genre
+                case orderAlbumName
+                case orderAlbumArtistName
+                case imageFiles
                 case smallImageUrl
                 case mediumImageUrl
                 case largeImageUrl
+                case paths
                 case externalUrl
+                case externalInfoUpdatedAt
                 case createdAt
                 case updatedAt
             }

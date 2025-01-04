@@ -131,6 +131,18 @@ components:
         - artistId
         - artist
       properties:
+        playCount:
+          type: integer
+        playDate:
+          type: string
+          format: date-time
+        rating:
+          type: integer
+        starred:
+          type: boolean
+        starredAt:
+          type: string
+          format: date-time
         id:
           type: string
         libraryId:
@@ -147,10 +159,34 @@ components:
           type: string
         allArtistIds:
           type: string
+        maxYear:
+          type: integer
+        minYear:
+          type: integer
+        date:
+          type: string
+        maxOriginalYear:
+          type: integer
+        minOriginalYear:
+          type: integer
+        releases:
+          type: integer
+        compilation:
+          type: boolean
+        songCount:
+          type: integer
         duration:
           type: number
           format: float32
+        size:
+          type: integer
         genre:
+          type: string
+        orderAlbumName:
+          type: string
+        orderAlbumArtistName:
+          type: string
+        imageFiles:
           type: string
         smallImageUrl:
           type: string
@@ -158,8 +194,13 @@ components:
           type: string
         largeImageUrl:
           type: string
+        paths:
+          type: string
         externalUrl:
           type: string
+        externalInfoUpdatedAt:
+          type: string
+          format: date-time
         createdAt:
           type: string
           format: date-time
