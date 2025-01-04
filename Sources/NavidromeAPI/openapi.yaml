@@ -127,9 +127,30 @@ components:
       type: object
       required:
         - id
+        - libraryId
         - name
+        - embedArtPath
         - artistId
         - artist
+        - albumArtistId
+        - albumArtist
+        - allArtistIds
+        - maxYear
+        - minYear
+        - maxOriginalYear
+        - minOriginalYear
+        - releases
+        - compilation
+        - songCount
+        - duration
+        - size
+        - genre
+        - genres
+        - orderAlbumName
+        - orderAlbumArtistName
+        - externalInfoUpdatedAt
+        - createdAt
+        - updatedAt
       properties:
         playCount:
           type: integer
@@ -148,6 +169,8 @@ components:
         libraryId:
           type: integer
         name:
+          type: string
+        embedArtPath:
           type: string
         artistId:
           type: string
@@ -169,6 +192,10 @@ components:
           type: integer
         minOriginalYear:
           type: integer
+        originalDate:
+          type: string
+        releaseDate:
+          type: string
         releases:
           type: integer
         compilation:
@@ -182,19 +209,29 @@ components:
           type: integer
         genre:
           type: string
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        sortAlbumName:
+          type: string
+        sortAlbumArtistName:
+          type: string
         orderAlbumName:
           type: string
         orderAlbumArtistName:
           type: string
         imageFiles:
           type: string
+        paths:
+          type: string
+        description:
+          type: string
         smallImageUrl:
           type: string
         mediumImageUrl:
           type: string
         largeImageUrl:
-          type: string
-        paths:
           type: string
         externalUrl:
           type: string
@@ -207,3 +244,12 @@ components:
         updatedAt:
           type: string
           format: date-time
+    Genre:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
