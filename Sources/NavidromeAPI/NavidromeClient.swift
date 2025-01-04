@@ -3,10 +3,16 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 import SubsonicAPI
 
-public struct SubsonicSession {
-    let username: String
-    let salt: String
-    let token: String
+public struct SubsonicSession: Equatable {
+    public let username: String
+    public let salt: String
+    public let token: String
+
+    public init(username: String, salt: String, token: String) {
+        self.username = username
+        self.salt = salt
+        self.token = token
+    }
 }
 
 public final class NavidromeClient {

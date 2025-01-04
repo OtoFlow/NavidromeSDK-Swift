@@ -105,6 +105,7 @@ components:
         - name
         - username
         - isAdmin
+        - token
       properties:
         id:
           type: string

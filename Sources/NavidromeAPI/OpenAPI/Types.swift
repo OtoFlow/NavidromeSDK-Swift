@@ -73,7 +73,7 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/AuthenticationResult/subsonicToken`.
             public var subsonicToken: Swift.String?
             /// - Remark: Generated from `#/components/schemas/AuthenticationResult/token`.
-            public var token: Swift.String?
+            public var token: Swift.String
             /// Creates a new `AuthenticationResult`.
             ///
             /// - Parameters:
@@ -93,7 +93,7 @@ public enum Components {
                 avatar: Swift.String? = nil,
                 subsonicSalt: Swift.String? = nil,
                 subsonicToken: Swift.String? = nil,
-                token: Swift.String? = nil
+                token: Swift.String
             ) {
                 self.id = id
                 self.name = name
