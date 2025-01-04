@@ -74,8 +74,8 @@ public final class NavidromeClient {
             device: configuration.deviceName,
             deviceID: configuration.deviceID,
             version: configuration.version,
-            userID: nil,
-            accessToken: nil
+            userID: userID,
+            accessToken: accessToken
         )
 
         self.init(
