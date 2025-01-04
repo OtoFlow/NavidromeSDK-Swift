@@ -1,0 +1,1285 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.2.0",
+    "title": "Navidrome API",
+    "description": "This spec describes the Navidrome API, which allows users to browse and manage their music library via a JSON:API  based interface. The API provides endpoints for albums, tracks, artists, playlists and images, along with their  relationships. Clients can retrieve information about the items in the library, filter and sort results, and  perform actions such as creating and deleting playlists. With this API, developers can build music apps and  services that integrate with Navidrome music server, providing a seamless experience for users to access and  manage their music collection.\n",
+    "contact": {
+      "name": "Navidrome",
+      "url": "https://navidrome.org"
+    },
+    "license": {
+      "name": "GNU General Public License v3.0",
+      "url": "https://github.com/navidrome/navidrome/blob/master/LICENSE"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v2"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/server": {
+      "get": {
+        "summary": "Get server's global info",
+        "operationId": "getServerInfo",
+        "responses": {
+          "200": {
+            "description": "The response’s data key maps to a resource object dictionary representing the server.",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ServerInfo"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/tracks": {
+      "get": {
+        "summary": "Retrieve a list of tracks",
+        "operationId": "getTracks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pageLimit"
+          },
+          {
+            "$ref": "#/components/parameters/pageOffset"
+          },
+          {
+            "$ref": "#/components/parameters/filterEquals"
+          },
+          {
+            "$ref": "#/components/parameters/filterContains"
+          },
+          {
+            "$ref": "#/components/parameters/filterLessThan"
+          },
+          {
+            "$ref": "#/components/parameters/filterLessOrEqual"
+          },
+          {
+            "$ref": "#/components/parameters/filterGreaterThan"
+          },
+          {
+            "$ref": "#/components/parameters/filterGreaterOrEqual"
+          },
+          {
+            "$ref": "#/components/parameters/filterStartsWith"
+          },
+          {
+            "$ref": "#/components/parameters/filterEndsWith"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/includeForTracks"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of tracks",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "links"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Track"
+                      }
+                    },
+                    "links": {
+                      "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "included": {
+                      "description": "Included resources, as requested by the `include` query parameter",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncludedResource"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/tracks/{trackId}": {
+      "get": {
+        "summary": "Retrieve an individual track",
+        "operationId": "getTrack",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/includeForTracks"
+          },
+          {
+            "name": "trackId",
+            "in": "path",
+            "description": "The unique identifier of the track",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A track object",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Track"
+                    },
+                    "included": {
+                      "description": "Included resources, as requested by the `include` query parameter",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncludedResource"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/artists": {
+      "get": {
+        "summary": "Retrieve a list of artists",
+        "operationId": "getArtists",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pageLimit"
+          },
+          {
+            "$ref": "#/components/parameters/pageOffset"
+          },
+          {
+            "$ref": "#/components/parameters/filterEquals"
+          },
+          {
+            "$ref": "#/components/parameters/filterContains"
+          },
+          {
+            "$ref": "#/components/parameters/filterLessThan"
+          },
+          {
+            "$ref": "#/components/parameters/filterLessOrEqual"
+          },
+          {
+            "$ref": "#/components/parameters/filterGreaterThan"
+          },
+          {
+            "$ref": "#/components/parameters/filterGreaterOrEqual"
+          },
+          {
+            "$ref": "#/components/parameters/filterStartsWith"
+          },
+          {
+            "$ref": "#/components/parameters/filterEndsWith"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/include"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of artists",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "links"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Artist"
+                      }
+                    },
+                    "links": {
+                      "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/artists/{artistId}": {
+      "get": {
+        "summary": "Retrieve an individual artist",
+        "operationId": "getArtist",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/include"
+          },
+          {
+            "name": "artistId",
+            "in": "path",
+            "description": "The unique identifier of the artist",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An artist object",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Artist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/albums": {
+      "get": {
+        "summary": "Retrieve a list of albums",
+        "operationId": "getAlbums",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pageLimit"
+          },
+          {
+            "$ref": "#/components/parameters/pageOffset"
+          },
+          {
+            "$ref": "#/components/parameters/filterEquals"
+          },
+          {
+            "$ref": "#/components/parameters/filterContains"
+          },
+          {
+            "$ref": "#/components/parameters/filterLessThan"
+          },
+          {
+            "$ref": "#/components/parameters/filterLessOrEqual"
+          },
+          {
+            "$ref": "#/components/parameters/filterGreaterThan"
+          },
+          {
+            "$ref": "#/components/parameters/filterGreaterOrEqual"
+          },
+          {
+            "$ref": "#/components/parameters/filterStartsWith"
+          },
+          {
+            "$ref": "#/components/parameters/filterEndsWith"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          },
+          {
+            "$ref": "#/components/parameters/includeForAlbums"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of albums",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "links"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Album"
+                      }
+                    },
+                    "links": {
+                      "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "included": {
+                      "description": "Included resources, as requested by the `include` query parameter",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncludedResource"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/albums/{albumId}": {
+      "get": {
+        "summary": "Retrieve an individual album",
+        "operationId": "getAlbum",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/includeForAlbum"
+          },
+          {
+            "name": "albumId",
+            "in": "path",
+            "description": "The unique identifier of the album",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An album object",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Album"
+                    },
+                    "included": {
+                      "description": "Included resources, as requested by the `include` query parameter",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncludedResource"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "pageLimit": {
+        "name": "page[limit]",
+        "in": "query",
+        "description": "The number of items per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "default": 10
+        }
+      },
+      "pageOffset": {
+        "name": "page[offset]",
+        "in": "query",
+        "description": "The offset for pagination",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "default": 0
+        }
+      },
+      "filterEquals": {
+        "name": "filter[equals]",
+        "in": "query",
+        "description": "Filter by any property with an exact match. Usage: filter[equals]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\w+"
+          }
+        }
+      },
+      "filterContains": {
+        "name": "filter[contains]",
+        "in": "query",
+        "description": "Filter by any property containing text. Usage: filter[contains]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\w+"
+          }
+        }
+      },
+      "filterLessThan": {
+        "name": "filter[lessThan]",
+        "in": "query",
+        "description": "Filter by any numeric property less than a value. Usage: filter[lessThan]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\d+"
+          }
+        }
+      },
+      "filterLessOrEqual": {
+        "name": "filter[lessOrEqual]",
+        "in": "query",
+        "description": "Filter by any numeric property less than or equal to a value. Usage: filter[lessOrEqual]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\d+"
+          }
+        }
+      },
+      "filterGreaterThan": {
+        "name": "filter[greaterThan]",
+        "in": "query",
+        "description": "Filter by any numeric property greater than a value. Usage: filter[greaterThan]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\d+"
+          }
+        }
+      },
+      "filterGreaterOrEqual": {
+        "name": "filter[greaterOrEqual]",
+        "in": "query",
+        "description": "Filter by any numeric property greater than or equal to a value. Usage: filter[greaterOrEqual]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\d+"
+          }
+        }
+      },
+      "filterStartsWith": {
+        "name": "filter[startsWith]",
+        "in": "query",
+        "description": "Filter by any property that starts with text. Usage: filter[startsWith]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\w+"
+          }
+        }
+      },
+      "filterEndsWith": {
+        "name": "filter[endsWith]",
+        "in": "query",
+        "description": "Filter by any property that ends with text. Usage: filter[endsWith]=property:value",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\w+:\\w+"
+          }
+        }
+      },
+      "sort": {
+        "name": "sort",
+        "in": "query",
+        "description": "Sort the results by one or more properties, separated by commas. Prefix the property with '-' for descending order.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "includeForTracks": {
+        "name": "include",
+        "in": "query",
+        "description": "Related resources to include in the response, separated by commas",
+        "required": false,
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "x-go-type": "includeSlice",
+          "items": {
+            "type": "string",
+            "enum": [
+              "album",
+              "artist"
+            ]
+          }
+        }
+      },
+      "include": {
+        "name": "include",
+        "in": "query",
+        "description": "Related resources to include in the response, separated by commas",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "includeForAlbums": {
+        "name": "include",
+        "in": "query",
+        "description": "Related resources to include in the response, separated by commas",
+        "required": false,
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "x-go-type": "includeSlice",
+          "items": {
+            "type": "string",
+            "enum": [
+              "artist"
+            ]
+          }
+        }
+      },
+      "includeForAlbum": {
+        "name": "include",
+        "in": "query",
+        "description": "Related resources to include in the response, separated by commas",
+        "required": false,
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "x-go-type": "includeSlice",
+          "items": {
+            "type": "string",
+            "enum": [
+              "track",
+              "artist"
+            ]
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ServerInfo": {
+        "type": "object",
+        "required": [
+          "server",
+          "serverVersion",
+          "authRequired",
+          "features"
+        ],
+        "properties": {
+          "server": {
+            "type": "string",
+            "description": "The name of the server software.",
+            "example": "navidrome"
+          },
+          "serverVersion": {
+            "type": "string",
+            "description": "The version number of the server.",
+            "example": "0.60.0"
+          },
+          "authRequired": {
+            "type": "boolean",
+            "description": "Whether the user has access to the server.",
+            "example": true
+          },
+          "features": {
+            "type": "array",
+            "description": "A list of optional features the server supports.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "albums",
+                "artists",
+                "images"
+              ]
+            }
+          }
+        }
+      },
+      "ErrorObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorList": {
+        "type": "object",
+        "required": [
+          "errors"
+        ],
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorObject"
+            }
+          }
+        }
+      },
+      "ResourceType": {
+        "type": "string",
+        "description": "The type of the resource",
+        "enum": [
+          "album",
+          "artist",
+          "track"
+        ]
+      },
+      "ResourceObject": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the resource"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ResourceType"
+          }
+        }
+      },
+      "TrackAttributes": {
+        "type": "object",
+        "required": [
+          "title",
+          "artist",
+          "album",
+          "albumartist",
+          "track",
+          "mimetype",
+          "duration",
+          "channels",
+          "bitrate",
+          "size"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the track"
+          },
+          "artist": {
+            "type": "string",
+            "description": "The name of the artist who performed the track"
+          },
+          "albumartist": {
+            "type": "string",
+            "description": "The primary artist of the album the track belongs to."
+          },
+          "album": {
+            "type": "string",
+            "description": "The name of the album the track belongs to"
+          },
+          "genre": {
+            "type": "string",
+            "description": "The genre of the track."
+          },
+          "track": {
+            "type": "integer",
+            "description": "The track number within the album."
+          },
+          "disc": {
+            "type": "integer",
+            "description": "The disc number within a multi-disc album."
+          },
+          "year": {
+            "type": "integer",
+            "description": "The release year of the track or album."
+          },
+          "bpm": {
+            "type": "integer",
+            "description": "The beats per minute (BPM) of the track."
+          },
+          "recording-mbid": {
+            "type": "string",
+            "description": "The MusicBrainz identifier for the recording of the track."
+          },
+          "track-mbid": {
+            "type": "string",
+            "description": "The MusicBrainz identifier for the track."
+          },
+          "comments": {
+            "type": "string",
+            "description": "Any additional comments or notes about the track."
+          },
+          "mimetype": {
+            "type": "string",
+            "description": "The MIME type of the audio file."
+          },
+          "duration": {
+            "type": "number",
+            "format": "float",
+            "description": "The duration of the track in seconds"
+          },
+          "channels": {
+            "type": "integer",
+            "description": "The number of audio channels in the track."
+          },
+          "bitrate": {
+            "type": "integer",
+            "description": "The bitrate of the audio file in kilobits per second (kbps)."
+          },
+          "size": {
+            "type": "integer",
+            "description": "The size of the audio file in bytes."
+          }
+        }
+      },
+      "ArtistRole": {
+        "type": "string",
+        "enum": [
+          "artist",
+          "albumArtist"
+        ],
+        "description": "The role of an artist in a track or album"
+      },
+      "ArtistMetaObject": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/ArtistRole"
+          }
+        },
+        "required": [
+          "role"
+        ]
+      },
+      "TrackArtistRelationship": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ArtistMetaObject"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResourceObject"
+          }
+        },
+        "required": [
+          "meta",
+          "data"
+        ]
+      },
+      "AlbumTrackRelationship": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ResourceObject"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "TrackRelationships": {
+        "type": "object",
+        "properties": {
+          "artists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrackArtistRelationship"
+            }
+          },
+          "albums": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlbumTrackRelationship"
+            }
+          }
+        },
+        "required": [
+          "artists"
+        ]
+      },
+      "Track": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "attributes": {
+                "$ref": "#/components/schemas/TrackAttributes"
+              },
+              "relationships": {
+                "$ref": "#/components/schemas/TrackRelationships"
+              }
+            }
+          }
+        ]
+      },
+      "PaginationLinks": {
+        "type": "object",
+        "properties": {
+          "first": {
+            "type": "string",
+            "format": "uri"
+          },
+          "prev": {
+            "type": "string",
+            "format": "uri"
+          },
+          "next": {
+            "type": "string",
+            "format": "uri"
+          },
+          "last": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "PaginationMeta": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The current page in the collection"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The total number of pages in the collection"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The total number of items in the collection"
+          }
+        }
+      },
+      "AlbumAttributes": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the album"
+          },
+          "artist": {
+            "type": "string",
+            "description": "The artist of the album"
+          },
+          "releaseDate": {
+            "type": "string",
+            "description": "The release date of the album"
+          },
+          "tracktotal": {
+            "type": "integer",
+            "description": "The number of tracks on the album"
+          },
+          "disctotal": {
+            "type": "integer",
+            "description": "The number of discs in the album"
+          },
+          "genre": {
+            "type": "string",
+            "description": "The genre of the album"
+          }
+        },
+        "required": [
+          "title",
+          "artist"
+        ]
+      },
+      "AlbumArtistRelationship": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ArtistMetaObject"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResourceObject"
+          }
+        },
+        "required": [
+          "meta",
+          "data"
+        ]
+      },
+      "Album": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "attributes": {
+                "$ref": "#/components/schemas/AlbumAttributes"
+              },
+              "relationships": {
+                "type": "object",
+                "properties": {
+                  "artists": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AlbumArtistRelationship"
+                    }
+                  },
+                  "tracks": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AlbumTrackRelationship"
+                    }
+                  }
+                },
+                "required": [
+                  "artists",
+                  "tracks"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "ArtistAttributes": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the artist"
+          },
+          "bio": {
+            "type": "string",
+            "description": "A short biography of the artist"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ArtistTrackRelationship": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "$ref": "#/components/schemas/ArtistRole"
+              }
+            },
+            "required": [
+              "role"
+            ]
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResourceObject"
+          }
+        },
+        "required": [
+          "meta",
+          "data"
+        ]
+      },
+      "ArtistAlbumRelationship": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/ArtistMetaObject"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResourceObject"
+          }
+        },
+        "required": [
+          "meta",
+          "data"
+        ]
+      },
+      "Artist": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceObject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "attributes": {
+                "$ref": "#/components/schemas/ArtistAttributes"
+              },
+              "relationships": {
+                "type": "object",
+                "properties": {
+                  "tracks": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/ArtistTrackRelationship"
+                        }
+                      }
+                    },
+                    "required": [
+                      "data"
+                    ]
+                  },
+                  "albums": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/ArtistAlbumRelationship"
+                        }
+                      }
+                    },
+                    "required": [
+                      "data"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "IncludedResource": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/Track"
+          },
+          {
+            "$ref": "#/components/schemas/Album"
+          },
+          {
+            "$ref": "#/components/schemas/Artist"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "track": "#/components/schemas/Track",
+            "album": "#/components/schemas/Album",
+            "artist": "#/components/schemas/Artist"
+          }
+        }
+      },
+      "ResourceList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Track"
+              },
+              {
+                "$ref": "#/components/schemas/Album"
+              },
+              {
+                "$ref": "#/components/schemas/Artist"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceObject"
+                }
+              }
+            ]
+          },
+          "included": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IncludedResource"
+            }
+          },
+          "links": {
+            "$ref": "#/components/schemas/PaginationLinks"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/PaginationMeta"
+          }
+        }
+      }
+    },
+    "responses": {
+      "NotAuthorized": {
+        "description": "Not Authorized",
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorList"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorList"
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad Request",
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorList"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

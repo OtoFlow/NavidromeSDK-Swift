@@ -1,0 +1,167 @@
+openapi: 3.1.0
+info:
+  title: Navidrome API
+  version: 0.1.0
+tags:
+  - name: Authentication
+  - name: Lists
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResult'
+  /api/album:
+    get:
+      tags:
+        - Lists
+      parameters:
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/PageEnd'
+        - $ref: '#/components/parameters/Order'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/ArtistId'
+        - $ref: '#/components/parameters/Starred'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Album'
+components:
+  parameters:
+    PageOffset:
+      name: _start
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    PageEnd:
+      name: _end
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 10
+    Order:
+      name: _order
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - ASC
+          - DESC
+        default: ASC
+    Sort:
+      name: _sort
+      in: query
+      required: false
+      schema:
+        type: string
+    ArtistId:
+      name: artist_id
+      in: query
+      required: false
+      schema:
+        type: string
+    Starred:
+      name: starred
+      in: query
+      required: false
+      schema:
+        type: boolean
+  schemas:
+    AuthenticationResult:
+      type: object
+      required:
+        - id
+        - name
+        - username
+        - isAdmin
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        username:
+          type: string
+        isAdmin:
+          type: boolean
+        avatar:
+          type: string
+        subsonicSalt:
+          type: string
+        subsonicToken:
+          type: string
+        token:
+          type: string
+    Album:
+      type: object
+      required:
+        - id
+        - name
+        - artistId
+        - artist
+      properties:
+        id:
+          type: string
+        libraryId:
+          type: integer
+        name:
+          type: string
+        artistId:
+          type: string
+        artist:
+          type: string
+        albumArtistId:
+          type: string
+        albumArtist:
+          type: string
+        allArtistIds:
+          type: string
+        duration:
+          type: number
+          format: float32
+        genre:
+          type: string
+        smallImageUrl:
+          type: string
+        mediumImageUrl:
+          type: string
+        largeImageUrl:
+          type: string
+        externalUrl:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
