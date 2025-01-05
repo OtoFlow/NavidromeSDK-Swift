@@ -147,7 +147,7 @@ components:
         - genre
         - orderAlbumName
         - orderAlbumArtistName
-        - createdAt
+        # - createdAt
         # - updatedAt
       properties:
         playCount:
@@ -236,9 +236,9 @@ components:
         externalInfoUpdatedAt:
           type: string
           format: date-time
-        createdAt:
-          type: string
-          format: date-time
+        # createdAt:
+        #   type: string
+        #   format: date-time
         # updatedAt:
         #   type: string
         #   format: date-time

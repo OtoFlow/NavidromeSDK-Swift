@@ -197,8 +197,6 @@ public enum Components {
             public var externalUrl: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/externalInfoUpdatedAt`.
             public var externalInfoUpdatedAt: Foundation.Date?
-            /// - Remark: Generated from `#/components/schemas/Album/createdAt`.
-            public var createdAt: Foundation.Date
             /// Creates a new `Album`.
             ///
             /// - Parameters:
@@ -242,7 +240,6 @@ public enum Components {
             ///   - largeImageUrl:
             ///   - externalUrl:
             ///   - externalInfoUpdatedAt:
-            ///   - createdAt:
             public init(
                 playCount: Swift.Int? = nil,
                 playDate: Foundation.Date? = nil,
@@ -283,8 +280,7 @@ public enum Components {
                 mediumImageUrl: Swift.String? = nil,
                 largeImageUrl: Swift.String? = nil,
                 externalUrl: Swift.String? = nil,
-                externalInfoUpdatedAt: Foundation.Date? = nil,
-                createdAt: Foundation.Date
+                externalInfoUpdatedAt: Foundation.Date? = nil
             ) {
                 self.playCount = playCount
                 self.playDate = playDate
@@ -326,7 +322,6 @@ public enum Components {
                 self.largeImageUrl = largeImageUrl
                 self.externalUrl = externalUrl
                 self.externalInfoUpdatedAt = externalInfoUpdatedAt
-                self.createdAt = createdAt
             }
             public enum CodingKeys: String, CodingKey {
                 case playCount
@@ -369,7 +364,6 @@ public enum Components {
                 case largeImageUrl
                 case externalUrl
                 case externalInfoUpdatedAt
-                case createdAt
             }
         }
         /// - Remark: Generated from `#/components/schemas/Genre`.
