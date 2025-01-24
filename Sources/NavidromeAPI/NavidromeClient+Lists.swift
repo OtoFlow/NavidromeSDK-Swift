@@ -7,7 +7,7 @@ public typealias Order = Components.Parameters.Order
 extension NavidromeClient {
     public func getAlbums(
         start: Int = 0,
-        end: Int = 19,
+        end: Int = 20,
         order: Order = .ASC,
         sort: String? = nil,
         artistId: String? = nil,
@@ -28,7 +28,7 @@ extension NavidromeClient {
 
     public func getSongs(
         start: Int = 0,
-        end: Int = 19,
+        end: Int = 20,
         order: Order = .ASC,
         sort: String? = nil,
         albumId: String? = nil,
