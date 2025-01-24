@@ -19,6 +19,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /api/album`.
     /// - Remark: Generated from `#/paths//api/album/get`.
     func get_sol_api_sol_album(_ input: Operations.get_sol_api_sol_album.Input) async throws -> Operations.get_sol_api_sol_album.Output
+    /// - Remark: HTTP `GET /api/song`.
+    /// - Remark: Generated from `#/paths//api/song/get`.
+    func get_sol_api_sol_song(_ input: Operations.get_sol_api_sol_song.Input) async throws -> Operations.get_sol_api_sol_song.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -43,6 +46,17 @@ extension APIProtocol {
         headers: Operations.get_sol_api_sol_album.Input.Headers = .init()
     ) async throws -> Operations.get_sol_api_sol_album.Output {
         try await get_sol_api_sol_album(Operations.get_sol_api_sol_album.Input(
+            query: query,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `GET /api/song`.
+    /// - Remark: Generated from `#/paths//api/song/get`.
+    public func get_sol_api_sol_song(
+        query: Operations.get_sol_api_sol_song.Input.Query = .init(),
+        headers: Operations.get_sol_api_sol_song.Input.Headers = .init()
+    ) async throws -> Operations.get_sol_api_sol_song.Output {
+        try await get_sol_api_sol_song(Operations.get_sol_api_sol_song.Input(
             query: query,
             headers: headers
         ))
@@ -197,6 +211,10 @@ public enum Components {
             public var externalUrl: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/externalInfoUpdatedAt`.
             public var externalInfoUpdatedAt: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/Album/createdAt`.
+            public var createdAt: Foundation.Date
+            /// - Remark: Generated from `#/components/schemas/Album/updatedAt`.
+            public var updatedAt: Foundation.Date
             /// Creates a new `Album`.
             ///
             /// - Parameters:
@@ -240,6 +258,8 @@ public enum Components {
             ///   - largeImageUrl:
             ///   - externalUrl:
             ///   - externalInfoUpdatedAt:
+            ///   - createdAt:
+            ///   - updatedAt:
             public init(
                 playCount: Swift.Int? = nil,
                 playDate: Foundation.Date? = nil,
@@ -280,7 +300,9 @@ public enum Components {
                 mediumImageUrl: Swift.String? = nil,
                 largeImageUrl: Swift.String? = nil,
                 externalUrl: Swift.String? = nil,
-                externalInfoUpdatedAt: Foundation.Date? = nil
+                externalInfoUpdatedAt: Foundation.Date? = nil,
+                createdAt: Foundation.Date,
+                updatedAt: Foundation.Date
             ) {
                 self.playCount = playCount
                 self.playDate = playDate
@@ -322,6 +344,8 @@ public enum Components {
                 self.largeImageUrl = largeImageUrl
                 self.externalUrl = externalUrl
                 self.externalInfoUpdatedAt = externalInfoUpdatedAt
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
                 case playCount
@@ -364,6 +388,367 @@ public enum Components {
                 case largeImageUrl
                 case externalUrl
                 case externalInfoUpdatedAt
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaFile`.
+        public struct MediaFile: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaFile/playCount`.
+            public var playCount: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/playDate`.
+            public var playDate: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/rating`.
+            public var rating: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/starred`.
+            public var starred: Swift.Bool?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/starredAt`.
+            public var starredAt: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/libraryId`.
+            public var libraryId: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/path`.
+            public var path: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/title`.
+            public var title: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/album`.
+            public var album: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/artistId`.
+            public var artistId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/artist`.
+            public var artist: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/albumArtistId`.
+            public var albumArtistId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/albumArtist`.
+            public var albumArtist: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/albumId`.
+            public var albumId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/hasCoverArt`.
+            public var hasCoverArt: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/MediaFile/trackNumber`.
+            public var trackNumber: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/discNumber`.
+            public var discNumber: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/discSubtitle`.
+            public var discSubtitle: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/year`.
+            public var year: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/date`.
+            public var date: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/originalYear`.
+            public var originalYear: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/originalDate`.
+            public var originalDate: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/releaseYear`.
+            public var releaseYear: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/releaseDate`.
+            public var releaseDate: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/size`.
+            public var size: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/suffix`.
+            public var suffix: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/duration`.
+            public var duration: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MediaFile/bitRate`.
+            public var bitRate: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/sampleRate`.
+            public var sampleRate: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFile/channels`.
+            public var channels: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/genre`.
+            public var genre: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/genres`.
+            public var genres: [Components.Schemas.Genre]?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/sortTitle`.
+            public var sortTitle: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/sortAlbumName`.
+            public var sortAlbumName: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/sortArtistName`.
+            public var sortArtistName: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/sortAlbumArtistName`.
+            public var sortAlbumArtistName: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/orderTitle`.
+            public var orderTitle: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/orderAlbumName`.
+            public var orderAlbumName: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/orderArtistName`.
+            public var orderArtistName: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/orderAlbumArtistName`.
+            public var orderAlbumArtistName: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/compilation`.
+            public var compilation: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/MediaFile/lyrics`.
+            public var lyrics: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/bpm`.
+            public var bpm: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/catalogNum`.
+            public var catalogNum: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mbzRecordingID`.
+            public var mbzRecordingID: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mbzReleaseTrackId`.
+            public var mbzReleaseTrackId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mbzAlbumId`.
+            public var mbzAlbumId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mbzArtistId`.
+            public var mbzArtistId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mbzAlbumArtistId`.
+            public var mbzAlbumArtistId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mbzAlbumType`.
+            public var mbzAlbumType: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mbzAlbumComment`.
+            public var mbzAlbumComment: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/rgAlbumGain`.
+            public var rgAlbumGain: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MediaFile/rgAlbumPeak`.
+            public var rgAlbumPeak: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MediaFile/rgTrackGain`.
+            public var rgTrackGain: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MediaFile/rgTrackPeak`.
+            public var rgTrackPeak: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MediaFile/createdAt`.
+            public var createdAt: Foundation.Date
+            /// - Remark: Generated from `#/components/schemas/MediaFile/updatedAt`.
+            public var updatedAt: Foundation.Date
+            /// Creates a new `MediaFile`.
+            ///
+            /// - Parameters:
+            ///   - playCount:
+            ///   - playDate:
+            ///   - rating:
+            ///   - starred:
+            ///   - starredAt:
+            ///   - id:
+            ///   - libraryId:
+            ///   - path:
+            ///   - title:
+            ///   - album:
+            ///   - artistId:
+            ///   - artist:
+            ///   - albumArtistId:
+            ///   - albumArtist:
+            ///   - albumId:
+            ///   - hasCoverArt:
+            ///   - trackNumber:
+            ///   - discNumber:
+            ///   - discSubtitle:
+            ///   - year:
+            ///   - date:
+            ///   - originalYear:
+            ///   - originalDate:
+            ///   - releaseYear:
+            ///   - releaseDate:
+            ///   - size:
+            ///   - suffix:
+            ///   - duration:
+            ///   - bitRate:
+            ///   - sampleRate:
+            ///   - channels:
+            ///   - genre:
+            ///   - genres:
+            ///   - sortTitle:
+            ///   - sortAlbumName:
+            ///   - sortArtistName:
+            ///   - sortAlbumArtistName:
+            ///   - orderTitle:
+            ///   - orderAlbumName:
+            ///   - orderArtistName:
+            ///   - orderAlbumArtistName:
+            ///   - compilation:
+            ///   - lyrics:
+            ///   - bpm:
+            ///   - catalogNum:
+            ///   - mbzRecordingID:
+            ///   - mbzReleaseTrackId:
+            ///   - mbzAlbumId:
+            ///   - mbzArtistId:
+            ///   - mbzAlbumArtistId:
+            ///   - mbzAlbumType:
+            ///   - mbzAlbumComment:
+            ///   - rgAlbumGain:
+            ///   - rgAlbumPeak:
+            ///   - rgTrackGain:
+            ///   - rgTrackPeak:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                playCount: Swift.Int? = nil,
+                playDate: Foundation.Date? = nil,
+                rating: Swift.Int? = nil,
+                starred: Swift.Bool? = nil,
+                starredAt: Foundation.Date? = nil,
+                id: Swift.String,
+                libraryId: Swift.Int,
+                path: Swift.String,
+                title: Swift.String,
+                album: Swift.String,
+                artistId: Swift.String,
+                artist: Swift.String,
+                albumArtistId: Swift.String,
+                albumArtist: Swift.String,
+                albumId: Swift.String,
+                hasCoverArt: Swift.Bool,
+                trackNumber: Swift.Int,
+                discNumber: Swift.Int,
+                discSubtitle: Swift.String? = nil,
+                year: Swift.Int,
+                date: Swift.String? = nil,
+                originalYear: Swift.Int,
+                originalDate: Swift.String? = nil,
+                releaseYear: Swift.Int,
+                releaseDate: Swift.String? = nil,
+                size: Swift.Int,
+                suffix: Swift.String,
+                duration: Swift.Double,
+                bitRate: Swift.Int,
+                sampleRate: Swift.Int,
+                channels: Swift.Int? = nil,
+                genre: Swift.String,
+                genres: [Components.Schemas.Genre]? = nil,
+                sortTitle: Swift.String? = nil,
+                sortAlbumName: Swift.String? = nil,
+                sortArtistName: Swift.String? = nil,
+                sortAlbumArtistName: Swift.String? = nil,
+                orderTitle: Swift.String? = nil,
+                orderAlbumName: Swift.String,
+                orderArtistName: Swift.String,
+                orderAlbumArtistName: Swift.String,
+                compilation: Swift.Bool,
+                lyrics: Swift.String,
+                bpm: Swift.Int? = nil,
+                catalogNum: Swift.String? = nil,
+                mbzRecordingID: Swift.String? = nil,
+                mbzReleaseTrackId: Swift.String? = nil,
+                mbzAlbumId: Swift.String? = nil,
+                mbzArtistId: Swift.String? = nil,
+                mbzAlbumArtistId: Swift.String? = nil,
+                mbzAlbumType: Swift.String? = nil,
+                mbzAlbumComment: Swift.String? = nil,
+                rgAlbumGain: Swift.Double,
+                rgAlbumPeak: Swift.Double,
+                rgTrackGain: Swift.Double,
+                rgTrackPeak: Swift.Double,
+                createdAt: Foundation.Date,
+                updatedAt: Foundation.Date
+            ) {
+                self.playCount = playCount
+                self.playDate = playDate
+                self.rating = rating
+                self.starred = starred
+                self.starredAt = starredAt
+                self.id = id
+                self.libraryId = libraryId
+                self.path = path
+                self.title = title
+                self.album = album
+                self.artistId = artistId
+                self.artist = artist
+                self.albumArtistId = albumArtistId
+                self.albumArtist = albumArtist
+                self.albumId = albumId
+                self.hasCoverArt = hasCoverArt
+                self.trackNumber = trackNumber
+                self.discNumber = discNumber
+                self.discSubtitle = discSubtitle
+                self.year = year
+                self.date = date
+                self.originalYear = originalYear
+                self.originalDate = originalDate
+                self.releaseYear = releaseYear
+                self.releaseDate = releaseDate
+                self.size = size
+                self.suffix = suffix
+                self.duration = duration
+                self.bitRate = bitRate
+                self.sampleRate = sampleRate
+                self.channels = channels
+                self.genre = genre
+                self.genres = genres
+                self.sortTitle = sortTitle
+                self.sortAlbumName = sortAlbumName
+                self.sortArtistName = sortArtistName
+                self.sortAlbumArtistName = sortAlbumArtistName
+                self.orderTitle = orderTitle
+                self.orderAlbumName = orderAlbumName
+                self.orderArtistName = orderArtistName
+                self.orderAlbumArtistName = orderAlbumArtistName
+                self.compilation = compilation
+                self.lyrics = lyrics
+                self.bpm = bpm
+                self.catalogNum = catalogNum
+                self.mbzRecordingID = mbzRecordingID
+                self.mbzReleaseTrackId = mbzReleaseTrackId
+                self.mbzAlbumId = mbzAlbumId
+                self.mbzArtistId = mbzArtistId
+                self.mbzAlbumArtistId = mbzAlbumArtistId
+                self.mbzAlbumType = mbzAlbumType
+                self.mbzAlbumComment = mbzAlbumComment
+                self.rgAlbumGain = rgAlbumGain
+                self.rgAlbumPeak = rgAlbumPeak
+                self.rgTrackGain = rgTrackGain
+                self.rgTrackPeak = rgTrackPeak
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case playCount
+                case playDate
+                case rating
+                case starred
+                case starredAt
+                case id
+                case libraryId
+                case path
+                case title
+                case album
+                case artistId
+                case artist
+                case albumArtistId
+                case albumArtist
+                case albumId
+                case hasCoverArt
+                case trackNumber
+                case discNumber
+                case discSubtitle
+                case year
+                case date
+                case originalYear
+                case originalDate
+                case releaseYear
+                case releaseDate
+                case size
+                case suffix
+                case duration
+                case bitRate
+                case sampleRate
+                case channels
+                case genre
+                case genres
+                case sortTitle
+                case sortAlbumName
+                case sortArtistName
+                case sortAlbumArtistName
+                case orderTitle
+                case orderAlbumName
+                case orderArtistName
+                case orderAlbumArtistName
+                case compilation
+                case lyrics
+                case bpm
+                case catalogNum
+                case mbzRecordingID
+                case mbzReleaseTrackId
+                case mbzAlbumId
+                case mbzArtistId
+                case mbzAlbumArtistId
+                case mbzAlbumType
+                case mbzAlbumComment
+                case rgAlbumGain
+                case rgAlbumPeak
+                case rgTrackGain
+                case rgTrackPeak
+                case createdAt
+                case updatedAt
             }
         }
         /// - Remark: Generated from `#/components/schemas/Genre`.
@@ -403,10 +788,14 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/parameters/Sort`.
         public typealias Sort = Swift.String
+        /// - Remark: Generated from `#/components/parameters/AlbumId`.
+        public typealias AlbumId = Swift.String
         /// - Remark: Generated from `#/components/parameters/ArtistId`.
         public typealias ArtistId = Swift.String
         /// - Remark: Generated from `#/components/parameters/Starred`.
         public typealias Starred = Swift.Bool
+        /// - Remark: Generated from `#/components/parameters/Title`.
+        public typealias Title = Swift.String
     }
     /// Types generated from the `#/components/requestBodies` section of the OpenAPI document.
     public enum RequestBodies {}
@@ -677,6 +1066,169 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
             public var ok: Operations.get_sol_api_sol_album.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/song`.
+    /// - Remark: Generated from `#/paths//api/song/get`.
+    public enum get_sol_api_sol_song {
+        public static let id: Swift.String = "get/api/song"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/song/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/song/GET/query/_start`.
+                public var _start: Components.Parameters.PageOffset?
+                /// - Remark: Generated from `#/paths/api/song/GET/query/_end`.
+                public var _end: Components.Parameters.PageEnd?
+                /// - Remark: Generated from `#/components/parameters/Order`.
+                @frozen public enum Order: String, Codable, Hashable, Sendable, CaseIterable {
+                    case ASC = "ASC"
+                    case DESC = "DESC"
+                }
+                /// - Remark: Generated from `#/paths/api/song/GET/query/_order`.
+                public var _order: Components.Parameters.Order?
+                /// - Remark: Generated from `#/paths/api/song/GET/query/_sort`.
+                public var _sort: Components.Parameters.Sort?
+                /// - Remark: Generated from `#/paths/api/song/GET/query/album_id`.
+                public var album_id: Components.Parameters.AlbumId?
+                /// - Remark: Generated from `#/paths/api/song/GET/query/starred`.
+                public var starred: Components.Parameters.Starred?
+                /// - Remark: Generated from `#/paths/api/song/GET/query/title`.
+                public var title: Components.Parameters.Title?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - _start:
+                ///   - _end:
+                ///   - _order:
+                ///   - _sort:
+                ///   - album_id:
+                ///   - starred:
+                ///   - title:
+                public init(
+                    _start: Components.Parameters.PageOffset? = nil,
+                    _end: Components.Parameters.PageEnd? = nil,
+                    _order: Components.Parameters.Order? = nil,
+                    _sort: Components.Parameters.Sort? = nil,
+                    album_id: Components.Parameters.AlbumId? = nil,
+                    starred: Components.Parameters.Starred? = nil,
+                    title: Components.Parameters.Title? = nil
+                ) {
+                    self._start = _start
+                    self._end = _end
+                    self._order = _order
+                    self._sort = _sort
+                    self.album_id = album_id
+                    self.starred = starred
+                    self.title = title
+                }
+            }
+            public var query: Operations.get_sol_api_sol_song.Input.Query
+            /// - Remark: Generated from `#/paths/api/song/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_song.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_song.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.get_sol_api_sol_song.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - headers:
+            public init(
+                query: Operations.get_sol_api_sol_song.Input.Query = .init(),
+                headers: Operations.get_sol_api_sol_song.Input.Headers = .init()
+            ) {
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/song/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/song/GET/responses/200/content/application\/json`.
+                    case json([Components.Schemas.MediaFile])
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: [Components.Schemas.MediaFile] {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_song.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_song.Output.Ok.Body) {
+                    self.body = body
+                }
+            }
+            /// OK
+            ///
+            /// - Remark: Generated from `#/paths//api/song/get/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.get_sol_api_sol_song.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.get_sol_api_sol_song.Output.Ok {
                 get throws {
                     switch self {
                     case let .ok(response):

@@ -49,6 +49,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Album'
+  /api/song:
+    get:
+      tags:
+        - Lists
+      parameters:
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/PageEnd'
+        - $ref: '#/components/parameters/Order'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/AlbumId'
+        - $ref: '#/components/parameters/Starred'
+        - $ref: '#/components/parameters/Title'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaFile'
 components:
   parameters:
     PageOffset:
@@ -85,6 +106,12 @@ components:
       required: false
       schema:
         type: string
+    AlbumId:
+      name: album_id
+      in: query
+      required: false
+      schema:
+        type: string
     ArtistId:
       name: artist_id
       in: query
@@ -97,6 +124,12 @@ components:
       required: false
       schema:
         type: boolean
+    Title:
+      name: title
+      in: query
+      required: false
+      schema:
+        type: string
   schemas:
     AuthenticationResult:
       type: object
@@ -147,8 +180,8 @@ components:
         - genre
         - orderAlbumName
         - orderAlbumArtistName
-        # - createdAt
-        # - updatedAt
+        - createdAt
+        - updatedAt
       properties:
         playCount:
           type: integer
@@ -236,12 +269,176 @@ components:
         externalInfoUpdatedAt:
           type: string
           format: date-time
-        # createdAt:
-        #   type: string
-        #   format: date-time
-        # updatedAt:
-        #   type: string
-        #   format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    MediaFile:
+      type: object
+      required:
+        - id
+        - libraryId
+        - path
+        - title
+        - album
+        - artistId
+        - artist
+        - albumArtistId
+        - albumArtist
+        - albumId
+        - hasCoverArt
+        - trackNumber
+        - discNumber
+        - year
+        - originalYear
+        - releaseYear
+        - size
+        - suffix
+        - duration
+        - bitRate
+        - sampleRate
+        - genre
+        - orderAlbumName
+        - orderArtistName
+        - orderAlbumArtistName
+        - compilation
+        - lyrics
+        - rgAlbumGain
+        - rgAlbumPeak
+        - rgTrackGain
+        - rgTrackPeak
+        - createdAt
+        - updatedAt
+      properties:
+        playCount:
+          type: integer
+        playDate:
+          type: string
+          format: date-time
+        rating:
+          type: integer
+        starred:
+          type: boolean
+        starredAt:
+          type: string
+          format: date-time
+        id:
+          type: string
+        libraryId:
+          type: integer
+        path:
+          type: string
+        title:
+          type: string
+        album:
+          type: string
+        artistId:
+          type: string
+        artist:
+          type: string
+        albumArtistId:
+          type: string
+        albumArtist:
+          type: string
+        albumId:
+          type: string
+        hasCoverArt:
+          type: boolean
+        trackNumber:
+          type: integer
+        discNumber:
+          type: integer
+        discSubtitle:
+          type: string
+        year:
+          type: integer
+        date:
+          type: string
+        originalYear:
+          type: integer
+        originalDate:
+          type: string
+        releaseYear:
+          type: integer
+        releaseDate:
+          type: string
+        size:
+          type: integer
+        suffix:
+          type: string
+        duration:
+          type: number
+          format: float32
+        bitRate:
+          type: integer
+        sampleRate:
+          type: integer
+        channels:
+          type: integer
+        genre:
+          type: string
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+        sortTitle:
+          type: string
+        sortAlbumName:
+          type: string
+        sortArtistName:
+          type: string
+        sortAlbumArtistName:
+          type: string
+        orderTitle:
+          type: string
+        orderAlbumName:
+          type: string
+        orderArtistName:
+          type: string
+        orderAlbumArtistName:
+          type: string
+        compilation:
+          type: boolean
+        lyrics:
+          type: string
+        bpm:
+          type: integer
+        catalogNum:
+          type: string
+        mbzRecordingID:
+          type: string
+        mbzReleaseTrackId:
+          type: string
+        mbzAlbumId:
+          type: string
+        mbzArtistId:
+          type: string
+        mbzAlbumArtistId:
+          type: string
+        mbzAlbumType:
+          type: string
+        mbzAlbumComment:
+          type: string
+        rgAlbumGain:
+          type: number
+          format: float64
+        rgAlbumPeak:
+          type: number
+          format: float64
+        rgTrackGain:
+          type: number
+          format: float64
+        rgTrackPeak:
+          type: number
+          format: float64
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     Genre:
       type: object
       required:

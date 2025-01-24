@@ -83,7 +83,7 @@ public final class NavidromeClient {
             underlyingClient: Client(
                 serverURL: configuration.serverURL,
                 configuration: .init(
-                    dateTranscoder: .iso8601WithFractionalSeconds
+                    dateTranscoder: ISO8601DownsamplingDateTranscoder()
                 ),
                 transport: URLSessionTransport(),
                 middlewares: [
