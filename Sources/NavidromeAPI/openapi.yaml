@@ -49,6 +49,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Album'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
   /api/song:
     get:
       tags:
@@ -59,6 +65,7 @@ paths:
         - $ref: '#/components/parameters/Order'
         - $ref: '#/components/parameters/Sort'
         - $ref: '#/components/parameters/AlbumId'
+        - $ref: '#/components/parameters/ArtistId'
         - $ref: '#/components/parameters/Starred'
         - $ref: '#/components/parameters/Title'
       responses:
@@ -70,6 +77,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MediaFile'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
 components:
   parameters:
     PageOffset:
@@ -131,6 +144,13 @@ components:
       schema:
         type: string
   schemas:
+    UnauthenticatedError:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
     AuthenticationResult:
       type: object
       required:

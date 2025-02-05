@@ -70,6 +70,21 @@ public enum Servers {}
 public enum Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
+        /// - Remark: Generated from `#/components/schemas/UnauthenticatedError`.
+        public struct UnauthenticatedError: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UnauthenticatedError/error`.
+            public var error: Swift.String
+            /// Creates a new `UnauthenticatedError`.
+            ///
+            /// - Parameters:
+            ///   - error:
+            public init(error: Swift.String) {
+                self.error = error
+            }
+            public enum CodingKeys: String, CodingKey {
+                case error
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/AuthenticationResult`.
         public struct AuthenticationResult: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthenticationResult/id`.
@@ -1078,6 +1093,57 @@ public enum Operations {
                     }
                 }
             }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/album/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/album/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.UnauthenticatedError)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.UnauthenticatedError {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_album.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_album.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/album/get/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.get_sol_api_sol_album.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.get_sol_api_sol_album.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
             /// Undocumented response.
             ///
             /// A response with a code that is not documented in the OpenAPI document.
@@ -1131,6 +1197,8 @@ public enum Operations {
                 public var _sort: Components.Parameters.Sort?
                 /// - Remark: Generated from `#/paths/api/song/GET/query/album_id`.
                 public var album_id: Components.Parameters.AlbumId?
+                /// - Remark: Generated from `#/paths/api/song/GET/query/artist_id`.
+                public var artist_id: Components.Parameters.ArtistId?
                 /// - Remark: Generated from `#/paths/api/song/GET/query/starred`.
                 public var starred: Components.Parameters.Starred?
                 /// - Remark: Generated from `#/paths/api/song/GET/query/title`.
@@ -1143,6 +1211,7 @@ public enum Operations {
                 ///   - _order:
                 ///   - _sort:
                 ///   - album_id:
+                ///   - artist_id:
                 ///   - starred:
                 ///   - title:
                 public init(
@@ -1151,6 +1220,7 @@ public enum Operations {
                     _order: Components.Parameters.Order? = nil,
                     _sort: Components.Parameters.Sort? = nil,
                     album_id: Components.Parameters.AlbumId? = nil,
+                    artist_id: Components.Parameters.ArtistId? = nil,
                     starred: Components.Parameters.Starred? = nil,
                     title: Components.Parameters.Title? = nil
                 ) {
@@ -1159,6 +1229,7 @@ public enum Operations {
                     self._order = _order
                     self._sort = _sort
                     self.album_id = album_id
+                    self.artist_id = artist_id
                     self.starred = starred
                     self.title = title
                 }
@@ -1236,6 +1307,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/song/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/song/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.UnauthenticatedError)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.UnauthenticatedError {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_song.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_song.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/song/get/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.get_sol_api_sol_song.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.get_sol_api_sol_song.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
                             response: self
                         )
                     }

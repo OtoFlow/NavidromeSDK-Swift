@@ -32,6 +32,7 @@ extension NavidromeClient {
         order: Order = .ASC,
         sort: String? = nil,
         albumId: String? = nil,
+        artistId: String? = nil,
         starred: Bool? = nil,
         title: String? = nil
     ) async throws -> [Song] {
@@ -42,6 +43,7 @@ extension NavidromeClient {
                 _order: order,
                 _sort: sort,
                 album_id: albumId,
+                artist_id: artistId,
                 starred: starred,
                 title: title
             )

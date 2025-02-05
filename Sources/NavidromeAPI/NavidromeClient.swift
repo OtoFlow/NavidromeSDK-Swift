@@ -3,6 +3,8 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 import SubsonicAPI
 
+public typealias AuthenticationResult = Components.Schemas.AuthenticationResult
+
 public struct SubsonicSession: Equatable {
     public let username: String
     public let salt: String
@@ -96,20 +98,22 @@ public final class NavidromeClient {
         self.accessToken = accessToken
         self.authenticationMiddleware = authenticationMiddleware
 
-        if let subsonicSession {
-            subsonicClient = SubsonicClient(
-                configuration: .init(
-                    serverURL: configuration.serverURL,
-                    client: configuration.client,
-                    version: configuration.version,
-                    deviceName: configuration.deviceName,
-                    deviceID: configuration.deviceID
-                ),
-                username: subsonicSession.username,
-                salt: subsonicSession.salt,
-                token: subsonicSession.token
-            )
-        }
+        subsonicSession.map(setupSubsonic(session:))
+    }
+
+    public func setupSubsonic(session: SubsonicSession) {
+        subsonicClient = SubsonicClient(
+            configuration: .init(
+                serverURL: configuration.serverURL,
+                client: configuration.client,
+                version: configuration.version,
+                deviceName: configuration.deviceName,
+                deviceID: configuration.deviceID
+            ),
+            username: session.username,
+            salt: session.salt,
+            token: session.token
+        )
     }
 }
 
@@ -117,7 +121,7 @@ extension NavidromeClient {
     public func login(
         username: String,
         password: String
-    ) async throws -> Components.Schemas.AuthenticationResult {
+    ) async throws -> AuthenticationResult {
         let result = try await underlyingClient.post_sol_auth_sol_login(
             body: .json(.init(username: username, password: password))
         ).ok.body.json
