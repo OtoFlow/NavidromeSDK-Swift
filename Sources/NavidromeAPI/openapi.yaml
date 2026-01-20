@@ -23,69 +23,151 @@ paths:
                 password:
                   type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthenticationResult'
+                $ref: "#/components/schemas/AuthenticationResult"
+  /api/artist:
+    get:
+      tags:
+        - Lists
+      parameters:
+        - $ref: "#/components/parameters/Start"
+        - $ref: "#/components/parameters/End"
+        - $ref: "#/components/parameters/Sort"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Starred"
+        - $ref: "#/components/parameters/Missing"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Artist"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthenticatedError"
   /api/album:
     get:
       tags:
         - Lists
       parameters:
-        - $ref: '#/components/parameters/PageOffset'
-        - $ref: '#/components/parameters/PageEnd'
-        - $ref: '#/components/parameters/Order'
-        - $ref: '#/components/parameters/Sort'
-        - $ref: '#/components/parameters/ArtistId'
-        - $ref: '#/components/parameters/Starred'
+        - $ref: "#/components/parameters/Start"
+        - $ref: "#/components/parameters/End"
+        - $ref: "#/components/parameters/Sort"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/ArtistId"
+        - $ref: "#/components/parameters/Compilation"
+        - $ref: "#/components/parameters/Starred"
+        - $ref: "#/components/parameters/Missing"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Album'
-        '401':
+                  $ref: "#/components/schemas/Album"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
+                $ref: "#/components/schemas/UnauthenticatedError"
   /api/song:
     get:
       tags:
         - Lists
       parameters:
-        - $ref: '#/components/parameters/PageOffset'
-        - $ref: '#/components/parameters/PageEnd'
-        - $ref: '#/components/parameters/Order'
-        - $ref: '#/components/parameters/Sort'
-        - $ref: '#/components/parameters/AlbumId'
-        - $ref: '#/components/parameters/ArtistId'
-        - $ref: '#/components/parameters/Starred'
-        - $ref: '#/components/parameters/Title'
+        - $ref: "#/components/parameters/Start"
+        - $ref: "#/components/parameters/End"
+        - $ref: "#/components/parameters/Sort"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/AlbumId"
+        - $ref: "#/components/parameters/ArtistId"
+        - $ref: "#/components/parameters/Starred"
+        - $ref: "#/components/parameters/Title"
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MediaFile'
-        '401':
+                  $ref: "#/components/schemas/MediaFile"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
+                $ref: "#/components/schemas/UnauthenticatedError"
+  /api/playlist:
+    get:
+      tags:
+        - Lists
+      parameters:
+        - $ref: "#/components/parameters/Start"
+        - $ref: "#/components/parameters/End"
+        - $ref: "#/components/parameters/Sort"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Query"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Playlist"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthenticatedError"
+  /api/playlist/{playlistId}/tracks:
+    get:
+      tags:
+        - Lists
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/Start"
+        - $ref: "#/components/parameters/End"
+        - $ref: "#/components/parameters/Sort"
+        - $ref: "#/components/parameters/Order"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlaylistTrack"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthenticatedError"
 components:
   parameters:
-    PageOffset:
+    Start:
       name: _start
       in: query
       required: false
@@ -94,7 +176,7 @@ components:
         format: int32
         minimum: 0
         default: 0
-    PageEnd:
+    End:
       name: _end
       in: query
       required: false
@@ -102,7 +184,13 @@ components:
         type: integer
         format: int32
         minimum: 0
-        default: 10
+        default: 20
+    Sort:
+      name: _sort
+      in: query
+      required: false
+      schema:
+        type: string
     Order:
       name: _order
       in: query
@@ -112,13 +200,6 @@ components:
         enum:
           - ASC
           - DESC
-        default: ASC
-    Sort:
-      name: _sort
-      in: query
-      required: false
-      schema:
-        type: string
     AlbumId:
       name: album_id
       in: query
@@ -131,14 +212,32 @@ components:
       required: false
       schema:
         type: string
+    Compilation:
+      name: compilation
+      in: query
+      required: false
+      schema:
+        type: boolean
     Starred:
       name: starred
       in: query
       required: false
       schema:
         type: boolean
+    Missing:
+      name: missing
+      in: query
+      required: false
+      schema:
+        type: boolean
     Title:
       name: title
+      in: query
+      required: false
+      schema:
+        type: string
+    Query:
+      name: q
       in: query
       required: false
       schema:
@@ -176,15 +275,26 @@ components:
           type: string
         token:
           type: string
+    Artist:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        albumCount:
+          type: integer
+        songCount:
+          type: integer
     Album:
       type: object
       required:
         - id
         - libraryId
         - name
-        - embedArtPath
-        - artistId
-        - artist
         - albumArtistId
         - albumArtist
         - allArtistIds
@@ -203,35 +313,15 @@ components:
         - createdAt
         - updatedAt
       properties:
-        playCount:
-          type: integer
-        playDate:
-          type: string
-          format: date-time
-        rating:
-          type: integer
-        starred:
-          type: boolean
-        starredAt:
-          type: string
-          format: date-time
         id:
           type: string
         libraryId:
           type: integer
         name:
           type: string
-        embedArtPath:
-          type: string
-        artistId:
-          type: string
-        artist:
-          type: string
         albumArtistId:
           type: string
         albumArtist:
-          type: string
-        allArtistIds:
           type: string
         maxYear:
           type: integer
@@ -247,8 +337,6 @@ components:
           type: string
         releaseDate:
           type: string
-        releases:
-          type: integer
         compilation:
           type: boolean
         songCount:
@@ -258,12 +346,7 @@ components:
           format: float32
         size:
           type: integer
-        genre:
-          type: string
-        genres:
-          type: array
-          items:
-            $ref: '#/components/schemas/Genre'
+        # discs:
         sortAlbumName:
           type: string
         sortAlbumArtistName:
@@ -272,9 +355,19 @@ components:
           type: string
         orderAlbumArtistName:
           type: string
-        imageFiles:
+        catalogNum:
           type: string
-        paths:
+        mbzAlbumId:
+          type: string
+        mbzAlbumArtistId:
+          type: string
+        mbzAlbumType:
+          type: string
+        mbzAlbumComment:
+          type: string
+        mbzReleaseGroupId:
+          type: string
+        explicitStatus:
           type: string
         description:
           type: string
@@ -289,12 +382,106 @@ components:
         externalInfoUpdatedAt:
           type: string
           format: date-time
+        genre:
+          type: string
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+        tags:
+          $ref: "#/components/schemas/Tags"
+        participants:
+          $ref: "#/components/schemas/Participants"
+        missing:
+          type: boolean
+        importedAt:
+          type: string
+          format: date-time
         createdAt:
           type: string
           format: date-time
         updatedAt:
           type: string
           format: date-time
+        # Annotation
+        playCount:
+          type: integer
+        playDate:
+          type: string
+          format: date-time
+        rating:
+          type: integer
+        starred:
+          type: boolean
+        starredAt:
+          type: string
+          format: date-time
+    Playlist:
+      type: object
+      required:
+        - id
+        - name
+        - comment
+        - duration
+        - size
+        - songCount
+        - ownerName
+        - ownerId
+        - public
+        - path
+        - sync
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        comment:
+          type: string
+        duration:
+          type: number
+          format: float32
+        size:
+          type: integer
+          format: int64
+        songCount:
+          type: integer
+        ownerName:
+          type: string
+        ownerId:
+          type: string
+        public:
+          type: boolean
+        path:
+          type: string
+        sync:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        # SmartPlaylist
+        evaluatedAt:
+          type: string
+          format: date-time
+    PlaylistTrack:
+      allOf:
+        - type: object
+          required:
+            - id
+            - mediaFileId
+            - playlistId
+          properties:
+            id:
+              type: string
+            mediaFileId:
+              type: string
+            playlistId:
+              type: string
+        - $ref: '#/components/schemas/MediaFile'
     MediaFile:
       type: object
       required:
@@ -303,9 +490,7 @@ components:
         - path
         - title
         - album
-        - artistId
         - artist
-        - albumArtistId
         - albumArtist
         - albumId
         - hasCoverArt
@@ -321,22 +506,11 @@ components:
         - sampleRate
         - genre
         - orderAlbumName
-        - orderArtistName
-        - orderAlbumArtistName
         - compilation
         - lyrics
-        - rgAlbumGain
-        - rgAlbumPeak
-        - rgTrackGain
-        - rgTrackPeak
         - createdAt
         - updatedAt
       properties:
-        playCount:
-          type: integer
-        playDate:
-          type: string
-          format: date-time
         rating:
           type: integer
         starred:
@@ -346,6 +520,17 @@ components:
           format: date-time
         id:
           type: string
+        mediaFileId:
+          type: string
+        playlistId:
+          type: string
+        playCount:
+          type: integer
+        playDate:
+          type: string
+          format: date-time
+        bookmarkPosition:
+          type: integer
         libraryId:
           type: integer
         path:
@@ -402,7 +587,7 @@ components:
         genres:
           type: array
           items:
-            $ref: '#/components/schemas/Genre'
+            $ref: "#/components/schemas/Genre"
         sortTitle:
           type: string
         sortAlbumName:
@@ -453,6 +638,13 @@ components:
         rgTrackPeak:
           type: number
           format: float64
+        participants:
+          $ref: "#/components/schemas/Participants"
+        missing:
+          type: boolean
+        birthTime:
+          type: string
+          format: date-time
         createdAt:
           type: string
           format: date-time
@@ -462,6 +654,31 @@ components:
     Genre:
       type: object
       required:
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Tags:
+      properties:
+        recordlabel:
+          type: array
+          items:
+            type: string
+    Participants:
+      properties:
+        albumartist:
+          type: array
+          items:
+            $ref: "#/components/schemas/ParticipantArtist"
+        artist:
+          type: array
+          items:
+            $ref: "#/components/schemas/ParticipantArtist"
+    ParticipantArtist:
+      required:
+        - id
         - name
       properties:
         id:

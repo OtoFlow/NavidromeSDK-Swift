@@ -52,7 +52,7 @@ public final class NavidromeClient {
     public var subsonic: SubsonicClient {
         get throws {
             guard let subsonicClient else {
-                throw APIError("Subsonic client not initialized")
+                throw APIError.invalidClient
             }
             return subsonicClient
         }
@@ -118,10 +118,12 @@ public final class NavidromeClient {
 }
 
 extension NavidromeClient {
+
     public func login(
         username: String,
         password: String
-    ) async throws -> AuthenticationResult {
+    ) async throws -> AuthenticationResult
+    {
         let result = try await underlyingClient.post_sol_auth_sol_login(
             body: .json(.init(username: username, password: password))
         ).ok.body.json

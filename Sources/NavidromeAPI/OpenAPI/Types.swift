@@ -16,12 +16,21 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /auth/login`.
     /// - Remark: Generated from `#/paths//auth/login/post`.
     func post_sol_auth_sol_login(_ input: Operations.post_sol_auth_sol_login.Input) async throws -> Operations.post_sol_auth_sol_login.Output
+    /// - Remark: HTTP `GET /api/artist`.
+    /// - Remark: Generated from `#/paths//api/artist/get`.
+    func get_sol_api_sol_artist(_ input: Operations.get_sol_api_sol_artist.Input) async throws -> Operations.get_sol_api_sol_artist.Output
     /// - Remark: HTTP `GET /api/album`.
     /// - Remark: Generated from `#/paths//api/album/get`.
     func get_sol_api_sol_album(_ input: Operations.get_sol_api_sol_album.Input) async throws -> Operations.get_sol_api_sol_album.Output
     /// - Remark: HTTP `GET /api/song`.
     /// - Remark: Generated from `#/paths//api/song/get`.
     func get_sol_api_sol_song(_ input: Operations.get_sol_api_sol_song.Input) async throws -> Operations.get_sol_api_sol_song.Output
+    /// - Remark: HTTP `GET /api/playlist`.
+    /// - Remark: Generated from `#/paths//api/playlist/get`.
+    func get_sol_api_sol_playlist(_ input: Operations.get_sol_api_sol_playlist.Input) async throws -> Operations.get_sol_api_sol_playlist.Output
+    /// - Remark: HTTP `GET /api/playlist/{playlistId}/tracks`.
+    /// - Remark: Generated from `#/paths//api/playlist/{playlistId}/tracks/get`.
+    func get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks(_ input: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input) async throws -> Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -37,6 +46,17 @@ extension APIProtocol {
         try await post_sol_auth_sol_login(Operations.post_sol_auth_sol_login.Input(
             headers: headers,
             body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/artist`.
+    /// - Remark: Generated from `#/paths//api/artist/get`.
+    public func get_sol_api_sol_artist(
+        query: Operations.get_sol_api_sol_artist.Input.Query = .init(),
+        headers: Operations.get_sol_api_sol_artist.Input.Headers = .init()
+    ) async throws -> Operations.get_sol_api_sol_artist.Output {
+        try await get_sol_api_sol_artist(Operations.get_sol_api_sol_artist.Input(
+            query: query,
+            headers: headers
         ))
     }
     /// - Remark: HTTP `GET /api/album`.
@@ -57,6 +77,30 @@ extension APIProtocol {
         headers: Operations.get_sol_api_sol_song.Input.Headers = .init()
     ) async throws -> Operations.get_sol_api_sol_song.Output {
         try await get_sol_api_sol_song(Operations.get_sol_api_sol_song.Input(
+            query: query,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `GET /api/playlist`.
+    /// - Remark: Generated from `#/paths//api/playlist/get`.
+    public func get_sol_api_sol_playlist(
+        query: Operations.get_sol_api_sol_playlist.Input.Query = .init(),
+        headers: Operations.get_sol_api_sol_playlist.Input.Headers = .init()
+    ) async throws -> Operations.get_sol_api_sol_playlist.Output {
+        try await get_sol_api_sol_playlist(Operations.get_sol_api_sol_playlist.Input(
+            query: query,
+            headers: headers
+        ))
+    }
+    /// - Remark: HTTP `GET /api/playlist/{playlistId}/tracks`.
+    /// - Remark: Generated from `#/paths//api/playlist/{playlistId}/tracks/get`.
+    public func get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks(
+        path: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Path,
+        query: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Query = .init(),
+        headers: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Headers = .init()
+    ) async throws -> Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output {
+        try await get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks(Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input(
+            path: path,
             query: query,
             headers: headers
         ))
@@ -144,36 +188,53 @@ public enum Components {
                 case token
             }
         }
+        /// - Remark: Generated from `#/components/schemas/Artist`.
+        public struct Artist: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Artist/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Artist/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Artist/albumCount`.
+            public var albumCount: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Artist/songCount`.
+            public var songCount: Swift.Int?
+            /// Creates a new `Artist`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - albumCount:
+            ///   - songCount:
+            public init(
+                id: Swift.String,
+                name: Swift.String,
+                albumCount: Swift.Int? = nil,
+                songCount: Swift.Int? = nil
+            ) {
+                self.id = id
+                self.name = name
+                self.albumCount = albumCount
+                self.songCount = songCount
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case albumCount
+                case songCount
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/Album`.
         public struct Album: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/Album/playCount`.
-            public var playCount: Swift.Int?
-            /// - Remark: Generated from `#/components/schemas/Album/playDate`.
-            public var playDate: Foundation.Date?
-            /// - Remark: Generated from `#/components/schemas/Album/rating`.
-            public var rating: Swift.Int?
-            /// - Remark: Generated from `#/components/schemas/Album/starred`.
-            public var starred: Swift.Bool?
-            /// - Remark: Generated from `#/components/schemas/Album/starredAt`.
-            public var starredAt: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/Album/id`.
             public var id: Swift.String
             /// - Remark: Generated from `#/components/schemas/Album/libraryId`.
             public var libraryId: Swift.Int
             /// - Remark: Generated from `#/components/schemas/Album/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/Album/embedArtPath`.
-            public var embedArtPath: Swift.String
-            /// - Remark: Generated from `#/components/schemas/Album/artistId`.
-            public var artistId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/Album/artist`.
-            public var artist: Swift.String
             /// - Remark: Generated from `#/components/schemas/Album/albumArtistId`.
             public var albumArtistId: Swift.String
             /// - Remark: Generated from `#/components/schemas/Album/albumArtist`.
             public var albumArtist: Swift.String
-            /// - Remark: Generated from `#/components/schemas/Album/allArtistIds`.
-            public var allArtistIds: Swift.String
             /// - Remark: Generated from `#/components/schemas/Album/maxYear`.
             public var maxYear: Swift.Int
             /// - Remark: Generated from `#/components/schemas/Album/minYear`.
@@ -188,8 +249,6 @@ public enum Components {
             public var originalDate: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/releaseDate`.
             public var releaseDate: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/Album/releases`.
-            public var releases: Swift.Int
             /// - Remark: Generated from `#/components/schemas/Album/compilation`.
             public var compilation: Swift.Bool
             /// - Remark: Generated from `#/components/schemas/Album/songCount`.
@@ -198,10 +257,6 @@ public enum Components {
             public var duration: Swift.Double
             /// - Remark: Generated from `#/components/schemas/Album/size`.
             public var size: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/Album/genre`.
-            public var genre: Swift.String
-            /// - Remark: Generated from `#/components/schemas/Album/genres`.
-            public var genres: [Components.Schemas.Genre]?
             /// - Remark: Generated from `#/components/schemas/Album/sortAlbumName`.
             public var sortAlbumName: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/sortAlbumArtistName`.
@@ -210,10 +265,20 @@ public enum Components {
             public var orderAlbumName: Swift.String
             /// - Remark: Generated from `#/components/schemas/Album/orderAlbumArtistName`.
             public var orderAlbumArtistName: Swift.String
-            /// - Remark: Generated from `#/components/schemas/Album/imageFiles`.
-            public var imageFiles: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/Album/paths`.
-            public var paths: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/catalogNum`.
+            public var catalogNum: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/mbzAlbumId`.
+            public var mbzAlbumId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/mbzAlbumArtistId`.
+            public var mbzAlbumArtistId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/mbzAlbumType`.
+            public var mbzAlbumType: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/mbzAlbumComment`.
+            public var mbzAlbumComment: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/mbzReleaseGroupId`.
+            public var mbzReleaseGroupId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/Album/explicitStatus`.
+            public var explicitStatus: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/description`.
             public var description: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/smallImageUrl`.
@@ -226,27 +291,40 @@ public enum Components {
             public var externalUrl: Swift.String?
             /// - Remark: Generated from `#/components/schemas/Album/externalInfoUpdatedAt`.
             public var externalInfoUpdatedAt: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/Album/genre`.
+            public var genre: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Album/genres`.
+            public var genres: [Components.Schemas.Genre]?
+            /// - Remark: Generated from `#/components/schemas/Album/tags`.
+            public var tags: Components.Schemas.Tags?
+            /// - Remark: Generated from `#/components/schemas/Album/participants`.
+            public var participants: Components.Schemas.Participants?
+            /// - Remark: Generated from `#/components/schemas/Album/missing`.
+            public var missing: Swift.Bool?
+            /// - Remark: Generated from `#/components/schemas/Album/importedAt`.
+            public var importedAt: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/Album/createdAt`.
             public var createdAt: Foundation.Date
             /// - Remark: Generated from `#/components/schemas/Album/updatedAt`.
             public var updatedAt: Foundation.Date
+            /// - Remark: Generated from `#/components/schemas/Album/playCount`.
+            public var playCount: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/playDate`.
+            public var playDate: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/Album/rating`.
+            public var rating: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/Album/starred`.
+            public var starred: Swift.Bool?
+            /// - Remark: Generated from `#/components/schemas/Album/starredAt`.
+            public var starredAt: Foundation.Date?
             /// Creates a new `Album`.
             ///
             /// - Parameters:
-            ///   - playCount:
-            ///   - playDate:
-            ///   - rating:
-            ///   - starred:
-            ///   - starredAt:
             ///   - id:
             ///   - libraryId:
             ///   - name:
-            ///   - embedArtPath:
-            ///   - artistId:
-            ///   - artist:
             ///   - albumArtistId:
             ///   - albumArtist:
-            ///   - allArtistIds:
             ///   - maxYear:
             ///   - minYear:
             ///   - date:
@@ -254,42 +332,46 @@ public enum Components {
             ///   - minOriginalYear:
             ///   - originalDate:
             ///   - releaseDate:
-            ///   - releases:
             ///   - compilation:
             ///   - songCount:
             ///   - duration:
             ///   - size:
-            ///   - genre:
-            ///   - genres:
             ///   - sortAlbumName:
             ///   - sortAlbumArtistName:
             ///   - orderAlbumName:
             ///   - orderAlbumArtistName:
-            ///   - imageFiles:
-            ///   - paths:
+            ///   - catalogNum:
+            ///   - mbzAlbumId:
+            ///   - mbzAlbumArtistId:
+            ///   - mbzAlbumType:
+            ///   - mbzAlbumComment:
+            ///   - mbzReleaseGroupId:
+            ///   - explicitStatus:
             ///   - description:
             ///   - smallImageUrl:
             ///   - mediumImageUrl:
             ///   - largeImageUrl:
             ///   - externalUrl:
             ///   - externalInfoUpdatedAt:
+            ///   - genre:
+            ///   - genres:
+            ///   - tags:
+            ///   - participants:
+            ///   - missing:
+            ///   - importedAt:
             ///   - createdAt:
             ///   - updatedAt:
+            ///   - playCount:
+            ///   - playDate:
+            ///   - rating:
+            ///   - starred:
+            ///   - starredAt:
             public init(
-                playCount: Swift.Int? = nil,
-                playDate: Foundation.Date? = nil,
-                rating: Swift.Int? = nil,
-                starred: Swift.Bool? = nil,
-                starredAt: Foundation.Date? = nil,
                 id: Swift.String,
                 libraryId: Swift.Int,
                 name: Swift.String,
-                embedArtPath: Swift.String,
-                artistId: Swift.String,
-                artist: Swift.String,
                 albumArtistId: Swift.String,
                 albumArtist: Swift.String,
-                allArtistIds: Swift.String,
                 maxYear: Swift.Int,
                 minYear: Swift.Int,
                 date: Swift.String? = nil,
@@ -297,42 +379,46 @@ public enum Components {
                 minOriginalYear: Swift.Int,
                 originalDate: Swift.String? = nil,
                 releaseDate: Swift.String? = nil,
-                releases: Swift.Int,
                 compilation: Swift.Bool,
                 songCount: Swift.Int,
                 duration: Swift.Double,
                 size: Swift.Int,
-                genre: Swift.String,
-                genres: [Components.Schemas.Genre]? = nil,
                 sortAlbumName: Swift.String? = nil,
                 sortAlbumArtistName: Swift.String? = nil,
                 orderAlbumName: Swift.String,
                 orderAlbumArtistName: Swift.String,
-                imageFiles: Swift.String? = nil,
-                paths: Swift.String? = nil,
+                catalogNum: Swift.String? = nil,
+                mbzAlbumId: Swift.String? = nil,
+                mbzAlbumArtistId: Swift.String? = nil,
+                mbzAlbumType: Swift.String? = nil,
+                mbzAlbumComment: Swift.String? = nil,
+                mbzReleaseGroupId: Swift.String? = nil,
+                explicitStatus: Swift.String? = nil,
                 description: Swift.String? = nil,
                 smallImageUrl: Swift.String? = nil,
                 mediumImageUrl: Swift.String? = nil,
                 largeImageUrl: Swift.String? = nil,
                 externalUrl: Swift.String? = nil,
                 externalInfoUpdatedAt: Foundation.Date? = nil,
+                genre: Swift.String,
+                genres: [Components.Schemas.Genre]? = nil,
+                tags: Components.Schemas.Tags? = nil,
+                participants: Components.Schemas.Participants? = nil,
+                missing: Swift.Bool? = nil,
+                importedAt: Foundation.Date? = nil,
                 createdAt: Foundation.Date,
-                updatedAt: Foundation.Date
+                updatedAt: Foundation.Date,
+                playCount: Swift.Int? = nil,
+                playDate: Foundation.Date? = nil,
+                rating: Swift.Int? = nil,
+                starred: Swift.Bool? = nil,
+                starredAt: Foundation.Date? = nil
             ) {
-                self.playCount = playCount
-                self.playDate = playDate
-                self.rating = rating
-                self.starred = starred
-                self.starredAt = starredAt
                 self.id = id
                 self.libraryId = libraryId
                 self.name = name
-                self.embedArtPath = embedArtPath
-                self.artistId = artistId
-                self.artist = artist
                 self.albumArtistId = albumArtistId
                 self.albumArtist = albumArtist
-                self.allArtistIds = allArtistIds
                 self.maxYear = maxYear
                 self.minYear = minYear
                 self.date = date
@@ -340,43 +426,47 @@ public enum Components {
                 self.minOriginalYear = minOriginalYear
                 self.originalDate = originalDate
                 self.releaseDate = releaseDate
-                self.releases = releases
                 self.compilation = compilation
                 self.songCount = songCount
                 self.duration = duration
                 self.size = size
-                self.genre = genre
-                self.genres = genres
                 self.sortAlbumName = sortAlbumName
                 self.sortAlbumArtistName = sortAlbumArtistName
                 self.orderAlbumName = orderAlbumName
                 self.orderAlbumArtistName = orderAlbumArtistName
-                self.imageFiles = imageFiles
-                self.paths = paths
+                self.catalogNum = catalogNum
+                self.mbzAlbumId = mbzAlbumId
+                self.mbzAlbumArtistId = mbzAlbumArtistId
+                self.mbzAlbumType = mbzAlbumType
+                self.mbzAlbumComment = mbzAlbumComment
+                self.mbzReleaseGroupId = mbzReleaseGroupId
+                self.explicitStatus = explicitStatus
                 self.description = description
                 self.smallImageUrl = smallImageUrl
                 self.mediumImageUrl = mediumImageUrl
                 self.largeImageUrl = largeImageUrl
                 self.externalUrl = externalUrl
                 self.externalInfoUpdatedAt = externalInfoUpdatedAt
+                self.genre = genre
+                self.genres = genres
+                self.tags = tags
+                self.participants = participants
+                self.missing = missing
+                self.importedAt = importedAt
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
+                self.playCount = playCount
+                self.playDate = playDate
+                self.rating = rating
+                self.starred = starred
+                self.starredAt = starredAt
             }
             public enum CodingKeys: String, CodingKey {
-                case playCount
-                case playDate
-                case rating
-                case starred
-                case starredAt
                 case id
                 case libraryId
                 case name
-                case embedArtPath
-                case artistId
-                case artist
                 case albumArtistId
                 case albumArtist
-                case allArtistIds
                 case maxYear
                 case minYear
                 case date
@@ -384,35 +474,195 @@ public enum Components {
                 case minOriginalYear
                 case originalDate
                 case releaseDate
-                case releases
                 case compilation
                 case songCount
                 case duration
                 case size
-                case genre
-                case genres
                 case sortAlbumName
                 case sortAlbumArtistName
                 case orderAlbumName
                 case orderAlbumArtistName
-                case imageFiles
-                case paths
+                case catalogNum
+                case mbzAlbumId
+                case mbzAlbumArtistId
+                case mbzAlbumType
+                case mbzAlbumComment
+                case mbzReleaseGroupId
+                case explicitStatus
                 case description
                 case smallImageUrl
                 case mediumImageUrl
                 case largeImageUrl
                 case externalUrl
                 case externalInfoUpdatedAt
+                case genre
+                case genres
+                case tags
+                case participants
+                case missing
+                case importedAt
                 case createdAt
                 case updatedAt
+                case playCount
+                case playDate
+                case rating
+                case starred
+                case starredAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/Playlist`.
+        public struct Playlist: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Playlist/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Playlist/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Playlist/comment`.
+            public var comment: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Playlist/duration`.
+            public var duration: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/Playlist/size`.
+            public var size: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/Playlist/songCount`.
+            public var songCount: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/Playlist/ownerName`.
+            public var ownerName: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Playlist/ownerId`.
+            public var ownerId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Playlist/public`.
+            public var _public: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/Playlist/path`.
+            public var path: Swift.String
+            /// - Remark: Generated from `#/components/schemas/Playlist/sync`.
+            public var sync: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/Playlist/createdAt`.
+            public var createdAt: Foundation.Date
+            /// - Remark: Generated from `#/components/schemas/Playlist/updatedAt`.
+            public var updatedAt: Foundation.Date
+            /// - Remark: Generated from `#/components/schemas/Playlist/evaluatedAt`.
+            public var evaluatedAt: Foundation.Date?
+            /// Creates a new `Playlist`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - comment:
+            ///   - duration:
+            ///   - size:
+            ///   - songCount:
+            ///   - ownerName:
+            ///   - ownerId:
+            ///   - _public:
+            ///   - path:
+            ///   - sync:
+            ///   - createdAt:
+            ///   - updatedAt:
+            ///   - evaluatedAt:
+            public init(
+                id: Swift.String,
+                name: Swift.String,
+                comment: Swift.String,
+                duration: Swift.Double,
+                size: Swift.Int64,
+                songCount: Swift.Int,
+                ownerName: Swift.String,
+                ownerId: Swift.String,
+                _public: Swift.Bool,
+                path: Swift.String,
+                sync: Swift.Bool,
+                createdAt: Foundation.Date,
+                updatedAt: Foundation.Date,
+                evaluatedAt: Foundation.Date? = nil
+            ) {
+                self.id = id
+                self.name = name
+                self.comment = comment
+                self.duration = duration
+                self.size = size
+                self.songCount = songCount
+                self.ownerName = ownerName
+                self.ownerId = ownerId
+                self._public = _public
+                self.path = path
+                self.sync = sync
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+                self.evaluatedAt = evaluatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case comment
+                case duration
+                case size
+                case songCount
+                case ownerName
+                case ownerId
+                case _public = "public"
+                case path
+                case sync
+                case createdAt
+                case updatedAt
+                case evaluatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/PlaylistTrack`.
+        public struct PlaylistTrack: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PlaylistTrack/value1`.
+            public struct Value1Payload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/PlaylistTrack/value1/id`.
+                public var id: Swift.String
+                /// - Remark: Generated from `#/components/schemas/PlaylistTrack/value1/mediaFileId`.
+                public var mediaFileId: Swift.String
+                /// - Remark: Generated from `#/components/schemas/PlaylistTrack/value1/playlistId`.
+                public var playlistId: Swift.String
+                /// Creates a new `Value1Payload`.
+                ///
+                /// - Parameters:
+                ///   - id:
+                ///   - mediaFileId:
+                ///   - playlistId:
+                public init(
+                    id: Swift.String,
+                    mediaFileId: Swift.String,
+                    playlistId: Swift.String
+                ) {
+                    self.id = id
+                    self.mediaFileId = mediaFileId
+                    self.playlistId = playlistId
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case id
+                    case mediaFileId
+                    case playlistId
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/PlaylistTrack/value1`.
+            public var value1: Components.Schemas.PlaylistTrack.Value1Payload
+            /// - Remark: Generated from `#/components/schemas/PlaylistTrack/value2`.
+            public var value2: Components.Schemas.MediaFile
+            /// Creates a new `PlaylistTrack`.
+            ///
+            /// - Parameters:
+            ///   - value1:
+            ///   - value2:
+            public init(
+                value1: Components.Schemas.PlaylistTrack.Value1Payload,
+                value2: Components.Schemas.MediaFile
+            ) {
+                self.value1 = value1
+                self.value2 = value2
+            }
+            public init(from decoder: any Decoder) throws {
+                value1 = try .init(from: decoder)
+                value2 = try .init(from: decoder)
+            }
+            public func encode(to encoder: any Encoder) throws {
+                try value1.encode(to: encoder)
+                try value2.encode(to: encoder)
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaFile`.
         public struct MediaFile: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaFile/playCount`.
-            public var playCount: Swift.Int?
-            /// - Remark: Generated from `#/components/schemas/MediaFile/playDate`.
-            public var playDate: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/MediaFile/rating`.
             public var rating: Swift.Int?
             /// - Remark: Generated from `#/components/schemas/MediaFile/starred`.
@@ -421,6 +671,16 @@ public enum Components {
             public var starredAt: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/MediaFile/id`.
             public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFile/mediaFileId`.
+            public var mediaFileId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/playlistId`.
+            public var playlistId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/playCount`.
+            public var playCount: Swift.Int?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/playDate`.
+            public var playDate: Foundation.Date?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/bookmarkPosition`.
+            public var bookmarkPosition: Swift.Int?
             /// - Remark: Generated from `#/components/schemas/MediaFile/libraryId`.
             public var libraryId: Swift.Int
             /// - Remark: Generated from `#/components/schemas/MediaFile/path`.
@@ -430,11 +690,11 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/MediaFile/album`.
             public var album: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaFile/artistId`.
-            public var artistId: Swift.String
+            public var artistId: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaFile/artist`.
             public var artist: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaFile/albumArtistId`.
-            public var albumArtistId: Swift.String
+            public var albumArtistId: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaFile/albumArtist`.
             public var albumArtist: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaFile/albumId`.
@@ -488,9 +748,9 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/MediaFile/orderAlbumName`.
             public var orderAlbumName: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaFile/orderArtistName`.
-            public var orderArtistName: Swift.String
+            public var orderArtistName: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaFile/orderAlbumArtistName`.
-            public var orderAlbumArtistName: Swift.String
+            public var orderAlbumArtistName: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaFile/compilation`.
             public var compilation: Swift.Bool
             /// - Remark: Generated from `#/components/schemas/MediaFile/lyrics`.
@@ -514,13 +774,19 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/MediaFile/mbzAlbumComment`.
             public var mbzAlbumComment: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaFile/rgAlbumGain`.
-            public var rgAlbumGain: Swift.Double
+            public var rgAlbumGain: Swift.Double?
             /// - Remark: Generated from `#/components/schemas/MediaFile/rgAlbumPeak`.
-            public var rgAlbumPeak: Swift.Double
+            public var rgAlbumPeak: Swift.Double?
             /// - Remark: Generated from `#/components/schemas/MediaFile/rgTrackGain`.
-            public var rgTrackGain: Swift.Double
+            public var rgTrackGain: Swift.Double?
             /// - Remark: Generated from `#/components/schemas/MediaFile/rgTrackPeak`.
-            public var rgTrackPeak: Swift.Double
+            public var rgTrackPeak: Swift.Double?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/participants`.
+            public var participants: Components.Schemas.Participants?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/missing`.
+            public var missing: Swift.Bool?
+            /// - Remark: Generated from `#/components/schemas/MediaFile/birthTime`.
+            public var birthTime: Foundation.Date?
             /// - Remark: Generated from `#/components/schemas/MediaFile/createdAt`.
             public var createdAt: Foundation.Date
             /// - Remark: Generated from `#/components/schemas/MediaFile/updatedAt`.
@@ -528,12 +794,15 @@ public enum Components {
             /// Creates a new `MediaFile`.
             ///
             /// - Parameters:
-            ///   - playCount:
-            ///   - playDate:
             ///   - rating:
             ///   - starred:
             ///   - starredAt:
             ///   - id:
+            ///   - mediaFileId:
+            ///   - playlistId:
+            ///   - playCount:
+            ///   - playDate:
+            ///   - bookmarkPosition:
             ///   - libraryId:
             ///   - path:
             ///   - title:
@@ -584,22 +853,28 @@ public enum Components {
             ///   - rgAlbumPeak:
             ///   - rgTrackGain:
             ///   - rgTrackPeak:
+            ///   - participants:
+            ///   - missing:
+            ///   - birthTime:
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                playCount: Swift.Int? = nil,
-                playDate: Foundation.Date? = nil,
                 rating: Swift.Int? = nil,
                 starred: Swift.Bool? = nil,
                 starredAt: Foundation.Date? = nil,
                 id: Swift.String,
+                mediaFileId: Swift.String? = nil,
+                playlistId: Swift.String? = nil,
+                playCount: Swift.Int? = nil,
+                playDate: Foundation.Date? = nil,
+                bookmarkPosition: Swift.Int? = nil,
                 libraryId: Swift.Int,
                 path: Swift.String,
                 title: Swift.String,
                 album: Swift.String,
-                artistId: Swift.String,
+                artistId: Swift.String? = nil,
                 artist: Swift.String,
-                albumArtistId: Swift.String,
+                albumArtistId: Swift.String? = nil,
                 albumArtist: Swift.String,
                 albumId: Swift.String,
                 hasCoverArt: Swift.Bool,
@@ -626,8 +901,8 @@ public enum Components {
                 sortAlbumArtistName: Swift.String? = nil,
                 orderTitle: Swift.String? = nil,
                 orderAlbumName: Swift.String,
-                orderArtistName: Swift.String,
-                orderAlbumArtistName: Swift.String,
+                orderArtistName: Swift.String? = nil,
+                orderAlbumArtistName: Swift.String? = nil,
                 compilation: Swift.Bool,
                 lyrics: Swift.String,
                 bpm: Swift.Int? = nil,
@@ -639,19 +914,25 @@ public enum Components {
                 mbzAlbumArtistId: Swift.String? = nil,
                 mbzAlbumType: Swift.String? = nil,
                 mbzAlbumComment: Swift.String? = nil,
-                rgAlbumGain: Swift.Double,
-                rgAlbumPeak: Swift.Double,
-                rgTrackGain: Swift.Double,
-                rgTrackPeak: Swift.Double,
+                rgAlbumGain: Swift.Double? = nil,
+                rgAlbumPeak: Swift.Double? = nil,
+                rgTrackGain: Swift.Double? = nil,
+                rgTrackPeak: Swift.Double? = nil,
+                participants: Components.Schemas.Participants? = nil,
+                missing: Swift.Bool? = nil,
+                birthTime: Foundation.Date? = nil,
                 createdAt: Foundation.Date,
                 updatedAt: Foundation.Date
             ) {
-                self.playCount = playCount
-                self.playDate = playDate
                 self.rating = rating
                 self.starred = starred
                 self.starredAt = starredAt
                 self.id = id
+                self.mediaFileId = mediaFileId
+                self.playlistId = playlistId
+                self.playCount = playCount
+                self.playDate = playDate
+                self.bookmarkPosition = bookmarkPosition
                 self.libraryId = libraryId
                 self.path = path
                 self.title = title
@@ -702,16 +983,22 @@ public enum Components {
                 self.rgAlbumPeak = rgAlbumPeak
                 self.rgTrackGain = rgTrackGain
                 self.rgTrackPeak = rgTrackPeak
+                self.participants = participants
+                self.missing = missing
+                self.birthTime = birthTime
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
-                case playCount
-                case playDate
                 case rating
                 case starred
                 case starredAt
                 case id
+                case mediaFileId
+                case playlistId
+                case playCount
+                case playDate
+                case bookmarkPosition
                 case libraryId
                 case path
                 case title
@@ -762,6 +1049,9 @@ public enum Components {
                 case rgAlbumPeak
                 case rgTrackGain
                 case rgTrackPeak
+                case participants
+                case missing
+                case birthTime
                 case createdAt
                 case updatedAt
             }
@@ -789,28 +1079,95 @@ public enum Components {
                 case name
             }
         }
+        /// - Remark: Generated from `#/components/schemas/Tags`.
+        public struct Tags: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Tags/recordlabel`.
+            public var recordlabel: [Swift.String]?
+            /// Creates a new `Tags`.
+            ///
+            /// - Parameters:
+            ///   - recordlabel:
+            public init(recordlabel: [Swift.String]? = nil) {
+                self.recordlabel = recordlabel
+            }
+            public enum CodingKeys: String, CodingKey {
+                case recordlabel
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/Participants`.
+        public struct Participants: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/Participants/albumartist`.
+            public var albumartist: [Components.Schemas.ParticipantArtist]?
+            /// - Remark: Generated from `#/components/schemas/Participants/artist`.
+            public var artist: [Components.Schemas.ParticipantArtist]?
+            /// Creates a new `Participants`.
+            ///
+            /// - Parameters:
+            ///   - albumartist:
+            ///   - artist:
+            public init(
+                albumartist: [Components.Schemas.ParticipantArtist]? = nil,
+                artist: [Components.Schemas.ParticipantArtist]? = nil
+            ) {
+                self.albumartist = albumartist
+                self.artist = artist
+            }
+            public enum CodingKeys: String, CodingKey {
+                case albumartist
+                case artist
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ParticipantArtist`.
+        public struct ParticipantArtist: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ParticipantArtist/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ParticipantArtist/name`.
+            public var name: Swift.String
+            /// Creates a new `ParticipantArtist`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            public init(
+                id: Swift.String,
+                name: Swift.String
+            ) {
+                self.id = id
+                self.name = name
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+            }
+        }
     }
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
-        /// - Remark: Generated from `#/components/parameters/PageOffset`.
-        public typealias PageOffset = Swift.Int32
-        /// - Remark: Generated from `#/components/parameters/PageEnd`.
-        public typealias PageEnd = Swift.Int32
+        /// - Remark: Generated from `#/components/parameters/Start`.
+        public typealias Start = Swift.Int32
+        /// - Remark: Generated from `#/components/parameters/End`.
+        public typealias End = Swift.Int32
+        /// - Remark: Generated from `#/components/parameters/Sort`.
+        public typealias Sort = Swift.String
         /// - Remark: Generated from `#/components/parameters/Order`.
         @frozen public enum Order: String, Codable, Hashable, Sendable, CaseIterable {
             case ASC = "ASC"
             case DESC = "DESC"
         }
-        /// - Remark: Generated from `#/components/parameters/Sort`.
-        public typealias Sort = Swift.String
         /// - Remark: Generated from `#/components/parameters/AlbumId`.
         public typealias AlbumId = Swift.String
         /// - Remark: Generated from `#/components/parameters/ArtistId`.
         public typealias ArtistId = Swift.String
+        /// - Remark: Generated from `#/components/parameters/Compilation`.
+        public typealias Compilation = Swift.Bool
         /// - Remark: Generated from `#/components/parameters/Starred`.
         public typealias Starred = Swift.Bool
+        /// - Remark: Generated from `#/components/parameters/Missing`.
+        public typealias Missing = Swift.Bool
         /// - Remark: Generated from `#/components/parameters/Title`.
         public typealias Title = Swift.String
+        /// - Remark: Generated from `#/components/parameters/Query`.
+        public typealias Query = Swift.String
     }
     /// Types generated from the `#/components/requestBodies` section of the OpenAPI document.
     public enum RequestBodies {}
@@ -966,6 +1323,215 @@ public enum Operations {
             }
         }
     }
+    /// - Remark: HTTP `GET /api/artist`.
+    /// - Remark: Generated from `#/paths//api/artist/get`.
+    public enum get_sol_api_sol_artist {
+        public static let id: Swift.String = "get/api/artist"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/artist/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/artist/GET/query/_start`.
+                public var _start: Components.Parameters.Start?
+                /// - Remark: Generated from `#/paths/api/artist/GET/query/_end`.
+                public var _end: Components.Parameters.End?
+                /// - Remark: Generated from `#/paths/api/artist/GET/query/_sort`.
+                public var _sort: Components.Parameters.Sort?
+                /// - Remark: Generated from `#/components/parameters/Order`.
+                @frozen public enum Order: String, Codable, Hashable, Sendable, CaseIterable {
+                    case ASC = "ASC"
+                    case DESC = "DESC"
+                }
+                /// - Remark: Generated from `#/paths/api/artist/GET/query/_order`.
+                public var _order: Components.Parameters.Order?
+                /// - Remark: Generated from `#/paths/api/artist/GET/query/starred`.
+                public var starred: Components.Parameters.Starred?
+                /// - Remark: Generated from `#/paths/api/artist/GET/query/missing`.
+                public var missing: Components.Parameters.Missing?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - _start:
+                ///   - _end:
+                ///   - _sort:
+                ///   - _order:
+                ///   - starred:
+                ///   - missing:
+                public init(
+                    _start: Components.Parameters.Start? = nil,
+                    _end: Components.Parameters.End? = nil,
+                    _sort: Components.Parameters.Sort? = nil,
+                    _order: Components.Parameters.Order? = nil,
+                    starred: Components.Parameters.Starred? = nil,
+                    missing: Components.Parameters.Missing? = nil
+                ) {
+                    self._start = _start
+                    self._end = _end
+                    self._sort = _sort
+                    self._order = _order
+                    self.starred = starred
+                    self.missing = missing
+                }
+            }
+            public var query: Operations.get_sol_api_sol_artist.Input.Query
+            /// - Remark: Generated from `#/paths/api/artist/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_artist.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_artist.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.get_sol_api_sol_artist.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - headers:
+            public init(
+                query: Operations.get_sol_api_sol_artist.Input.Query = .init(),
+                headers: Operations.get_sol_api_sol_artist.Input.Headers = .init()
+            ) {
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/artist/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/artist/GET/responses/200/content/application\/json`.
+                    case json([Components.Schemas.Artist])
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: [Components.Schemas.Artist] {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_artist.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_artist.Output.Ok.Body) {
+                    self.body = body
+                }
+            }
+            /// OK
+            ///
+            /// - Remark: Generated from `#/paths//api/artist/get/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.get_sol_api_sol_artist.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.get_sol_api_sol_artist.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/artist/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/artist/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.UnauthenticatedError)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.UnauthenticatedError {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_artist.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_artist.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/artist/get/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.get_sol_api_sol_artist.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.get_sol_api_sol_artist.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
     /// - Remark: HTTP `GET /api/album`.
     /// - Remark: Generated from `#/paths//api/album/get`.
     public enum get_sol_api_sol_album {
@@ -974,9 +1540,11 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/album/GET/query`.
             public struct Query: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/album/GET/query/_start`.
-                public var _start: Components.Parameters.PageOffset?
+                public var _start: Components.Parameters.Start?
                 /// - Remark: Generated from `#/paths/api/album/GET/query/_end`.
-                public var _end: Components.Parameters.PageEnd?
+                public var _end: Components.Parameters.End?
+                /// - Remark: Generated from `#/paths/api/album/GET/query/_sort`.
+                public var _sort: Components.Parameters.Sort?
                 /// - Remark: Generated from `#/components/parameters/Order`.
                 @frozen public enum Order: String, Codable, Hashable, Sendable, CaseIterable {
                     case ASC = "ASC"
@@ -984,35 +1552,43 @@ public enum Operations {
                 }
                 /// - Remark: Generated from `#/paths/api/album/GET/query/_order`.
                 public var _order: Components.Parameters.Order?
-                /// - Remark: Generated from `#/paths/api/album/GET/query/_sort`.
-                public var _sort: Components.Parameters.Sort?
                 /// - Remark: Generated from `#/paths/api/album/GET/query/artist_id`.
                 public var artist_id: Components.Parameters.ArtistId?
+                /// - Remark: Generated from `#/paths/api/album/GET/query/compilation`.
+                public var compilation: Components.Parameters.Compilation?
                 /// - Remark: Generated from `#/paths/api/album/GET/query/starred`.
                 public var starred: Components.Parameters.Starred?
+                /// - Remark: Generated from `#/paths/api/album/GET/query/missing`.
+                public var missing: Components.Parameters.Missing?
                 /// Creates a new `Query`.
                 ///
                 /// - Parameters:
                 ///   - _start:
                 ///   - _end:
-                ///   - _order:
                 ///   - _sort:
+                ///   - _order:
                 ///   - artist_id:
+                ///   - compilation:
                 ///   - starred:
+                ///   - missing:
                 public init(
-                    _start: Components.Parameters.PageOffset? = nil,
-                    _end: Components.Parameters.PageEnd? = nil,
-                    _order: Components.Parameters.Order? = nil,
+                    _start: Components.Parameters.Start? = nil,
+                    _end: Components.Parameters.End? = nil,
                     _sort: Components.Parameters.Sort? = nil,
+                    _order: Components.Parameters.Order? = nil,
                     artist_id: Components.Parameters.ArtistId? = nil,
-                    starred: Components.Parameters.Starred? = nil
+                    compilation: Components.Parameters.Compilation? = nil,
+                    starred: Components.Parameters.Starred? = nil,
+                    missing: Components.Parameters.Missing? = nil
                 ) {
                     self._start = _start
                     self._end = _end
-                    self._order = _order
                     self._sort = _sort
+                    self._order = _order
                     self.artist_id = artist_id
+                    self.compilation = compilation
                     self.starred = starred
+                    self.missing = missing
                 }
             }
             public var query: Operations.get_sol_api_sol_album.Input.Query
@@ -1183,9 +1759,11 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/song/GET/query`.
             public struct Query: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/song/GET/query/_start`.
-                public var _start: Components.Parameters.PageOffset?
+                public var _start: Components.Parameters.Start?
                 /// - Remark: Generated from `#/paths/api/song/GET/query/_end`.
-                public var _end: Components.Parameters.PageEnd?
+                public var _end: Components.Parameters.End?
+                /// - Remark: Generated from `#/paths/api/song/GET/query/_sort`.
+                public var _sort: Components.Parameters.Sort?
                 /// - Remark: Generated from `#/components/parameters/Order`.
                 @frozen public enum Order: String, Codable, Hashable, Sendable, CaseIterable {
                     case ASC = "ASC"
@@ -1193,8 +1771,6 @@ public enum Operations {
                 }
                 /// - Remark: Generated from `#/paths/api/song/GET/query/_order`.
                 public var _order: Components.Parameters.Order?
-                /// - Remark: Generated from `#/paths/api/song/GET/query/_sort`.
-                public var _sort: Components.Parameters.Sort?
                 /// - Remark: Generated from `#/paths/api/song/GET/query/album_id`.
                 public var album_id: Components.Parameters.AlbumId?
                 /// - Remark: Generated from `#/paths/api/song/GET/query/artist_id`.
@@ -1208,17 +1784,17 @@ public enum Operations {
                 /// - Parameters:
                 ///   - _start:
                 ///   - _end:
-                ///   - _order:
                 ///   - _sort:
+                ///   - _order:
                 ///   - album_id:
                 ///   - artist_id:
                 ///   - starred:
                 ///   - title:
                 public init(
-                    _start: Components.Parameters.PageOffset? = nil,
-                    _end: Components.Parameters.PageEnd? = nil,
-                    _order: Components.Parameters.Order? = nil,
+                    _start: Components.Parameters.Start? = nil,
+                    _end: Components.Parameters.End? = nil,
                     _sort: Components.Parameters.Sort? = nil,
+                    _order: Components.Parameters.Order? = nil,
                     album_id: Components.Parameters.AlbumId? = nil,
                     artist_id: Components.Parameters.ArtistId? = nil,
                     starred: Components.Parameters.Starred? = nil,
@@ -1226,8 +1802,8 @@ public enum Operations {
                 ) {
                     self._start = _start
                     self._end = _end
-                    self._order = _order
                     self._sort = _sort
+                    self._order = _order
                     self.album_id = album_id
                     self.artist_id = artist_id
                     self.starred = starred
@@ -1351,6 +1927,425 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized: Operations.get_sol_api_sol_song.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/playlist`.
+    /// - Remark: Generated from `#/paths//api/playlist/get`.
+    public enum get_sol_api_sol_playlist {
+        public static let id: Swift.String = "get/api/playlist"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/playlist/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/playlist/GET/query/_start`.
+                public var _start: Components.Parameters.Start?
+                /// - Remark: Generated from `#/paths/api/playlist/GET/query/_end`.
+                public var _end: Components.Parameters.End?
+                /// - Remark: Generated from `#/paths/api/playlist/GET/query/_sort`.
+                public var _sort: Components.Parameters.Sort?
+                /// - Remark: Generated from `#/components/parameters/Order`.
+                @frozen public enum Order: String, Codable, Hashable, Sendable, CaseIterable {
+                    case ASC = "ASC"
+                    case DESC = "DESC"
+                }
+                /// - Remark: Generated from `#/paths/api/playlist/GET/query/_order`.
+                public var _order: Components.Parameters.Order?
+                /// - Remark: Generated from `#/paths/api/playlist/GET/query/q`.
+                public var q: Components.Parameters.Query?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - _start:
+                ///   - _end:
+                ///   - _sort:
+                ///   - _order:
+                ///   - q:
+                public init(
+                    _start: Components.Parameters.Start? = nil,
+                    _end: Components.Parameters.End? = nil,
+                    _sort: Components.Parameters.Sort? = nil,
+                    _order: Components.Parameters.Order? = nil,
+                    q: Components.Parameters.Query? = nil
+                ) {
+                    self._start = _start
+                    self._end = _end
+                    self._sort = _sort
+                    self._order = _order
+                    self.q = q
+                }
+            }
+            public var query: Operations.get_sol_api_sol_playlist.Input.Query
+            /// - Remark: Generated from `#/paths/api/playlist/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_playlist.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_playlist.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.get_sol_api_sol_playlist.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - headers:
+            public init(
+                query: Operations.get_sol_api_sol_playlist.Input.Query = .init(),
+                headers: Operations.get_sol_api_sol_playlist.Input.Headers = .init()
+            ) {
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/playlist/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/playlist/GET/responses/200/content/application\/json`.
+                    case json([Components.Schemas.Playlist])
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: [Components.Schemas.Playlist] {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_playlist.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_playlist.Output.Ok.Body) {
+                    self.body = body
+                }
+            }
+            /// OK
+            ///
+            /// - Remark: Generated from `#/paths//api/playlist/get/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.get_sol_api_sol_playlist.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.get_sol_api_sol_playlist.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/playlist/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/playlist/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.UnauthenticatedError)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.UnauthenticatedError {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_playlist.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_playlist.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/playlist/get/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.get_sol_api_sol_playlist.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.get_sol_api_sol_playlist.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/playlist/{playlistId}/tracks`.
+    /// - Remark: Generated from `#/paths//api/playlist/{playlistId}/tracks/get`.
+    public enum get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks {
+        public static let id: Swift.String = "get/api/playlist/{playlistId}/tracks"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/path/playlistId`.
+                public var playlistId: Swift.String
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - playlistId:
+                public init(playlistId: Swift.String) {
+                    self.playlistId = playlistId
+                }
+            }
+            public var path: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Path
+            /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/query/_start`.
+                public var _start: Components.Parameters.Start?
+                /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/query/_end`.
+                public var _end: Components.Parameters.End?
+                /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/query/_sort`.
+                public var _sort: Components.Parameters.Sort?
+                /// - Remark: Generated from `#/components/parameters/Order`.
+                @frozen public enum Order: String, Codable, Hashable, Sendable, CaseIterable {
+                    case ASC = "ASC"
+                    case DESC = "DESC"
+                }
+                /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/query/_order`.
+                public var _order: Components.Parameters.Order?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - _start:
+                ///   - _end:
+                ///   - _sort:
+                ///   - _order:
+                public init(
+                    _start: Components.Parameters.Start? = nil,
+                    _end: Components.Parameters.End? = nil,
+                    _sort: Components.Parameters.Sort? = nil,
+                    _order: Components.Parameters.Order? = nil
+                ) {
+                    self._start = _start
+                    self._end = _end
+                    self._sort = _sort
+                    self._order = _order
+                }
+            }
+            public var query: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Query
+            /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - query:
+            ///   - headers:
+            public init(
+                path: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Path,
+                query: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Query = .init(),
+                headers: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            public struct Ok: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/responses/200/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/responses/200/content/application\/json`.
+                    case json([Components.Schemas.PlaylistTrack])
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: [Components.Schemas.PlaylistTrack] {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Ok.Body
+                /// Creates a new `Ok`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Ok.Body) {
+                    self.body = body
+                }
+            }
+            /// OK
+            ///
+            /// - Remark: Generated from `#/paths//api/playlist/{playlistId}/tracks/get/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Ok)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Ok {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/playlist/{playlistId}/tracks/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.UnauthenticatedError)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.UnauthenticatedError {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/playlist/{playlistId}/tracks/get/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.get_sol_api_sol_playlist_sol__lcub_playlistId_rcub__sol_tracks.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):

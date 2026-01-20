@@ -4,10 +4,10 @@ import PackageDescription
 let package = Package(
     name: "NavidromeAPI",
     platforms: [
-        .macOS(.v13),
-        .iOS(.v16),
-        .tvOS(.v16),
-        .watchOS(.v9),
+        .macOS(.v12),
+        .iOS(.v15),
+        .tvOS(.v15),
+        .watchOS(.v8),
     ],
     products: [.library(name: "NavidromeAPI", targets: ["NavidromeAPI"])],
     dependencies: [

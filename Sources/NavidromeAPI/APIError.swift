@@ -1,11 +1,10 @@
 import Foundation
 
-public struct APIError: LocalizedError {
-    public let message: String
+public enum APIError: Error {
 
-    init(_ message: String) {
-        self.message = message
-    }
+    case invalidClient
 
-    public var errorDescription: String? { message }
+    case unauthorized(String)
+
+    case undocumented(statusCode: Int)
 }
