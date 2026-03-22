@@ -1,0 +1,3 @@
+[submodule "External/navidrome"]
+	path = External/navidrome
+	url = git@github.com:navidrome/navidrome.git
